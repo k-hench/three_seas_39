@@ -1,2 +1,4 @@
 data
 .Rproj.user
+read_transect_data_prep.R
+transect_typos
