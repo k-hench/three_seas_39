@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 pie-charts on map | Three Seas 39 data analysis</title>
+  <meta name="description" content="Community analysis based on transects" />
+  <meta name="generator" content="bookdown 0.15 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 pie-charts on map | Three Seas 39 data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Community analysis based on transects" />
+  <meta name="github-repo" content="k-hench/bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 pie-charts on map | Three Seas 39 data analysis" />
+  
+  <meta name="twitter:description" content="Community analysis based on transects" />
+  
+
+<meta name="author" content="Kosmas Hench" />
+
+
+<meta name="date" content="2020-01-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="nmds-and-permanova.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="../">Three Seas 39 data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Intro</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#before-you-start"><i class="fa fa-check"></i><b>1.1</b> Before you start</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-structure"><i class="fa fa-check"></i><b>1.2</b> Data structure</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html"><i class="fa fa-check"></i><b>2</b> nMDS and Permanova</a><ul>
+<li class="chapter" data-level="2.1" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#external-pacakges"><i class="fa fa-check"></i><b>2.1</b> External pacakges</a></li>
+<li class="chapter" data-level="2.2" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#custom-functions"><i class="fa fa-check"></i><b>2.2</b> Custom functions</a></li>
+<li class="chapter" data-level="2.3" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#loading-data"><i class="fa fa-check"></i><b>2.3</b> Loading data</a></li>
+<li class="chapter" data-level="2.4" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#run-nmds"><i class="fa fa-check"></i><b>2.4</b> Run nMDS</a></li>
+<li class="chapter" data-level="2.5" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#permanova"><i class="fa fa-check"></i><b>2.5</b> Permanova</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html"><i class="fa fa-check"></i><b>3</b> pie-charts on map</a><ul>
+<li class="chapter" data-level="3.1" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#loading-data-1"><i class="fa fa-check"></i><b>3.1</b> Loading data</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li> <image src="logo.svg" alt="Smiley face" style="width:100%; height:100px;"> </li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Three Seas 39 data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pie-charts-on-map" class="section level1">
+<h1><span class="header-section-number">3</span> pie-charts on map</h1>
+<p>Note that we need to drop the following entries unless you know their family:</p>
+<ul>
+<li>little_grey_guys</li>
+<li>little_guys_green</li>
+</ul>
+<p>Also, the following species need to be added to the fish list:</p>
+<ul>
+<li>flagfin_mojarra</li>
+<li>grey_snapper</li>
+<li>bearded_toadfish</li>
+<li>blue hamlet (unless changed to black hamlet)</li>
+</ul>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># loading all needed libraries</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw">library</span>(sf)</a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="kw">library</span>(scatterpie)</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="kw">library</span>(paletteer)</a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="kw">library</span>(ggforce)</a>
+<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="kw">library</span>(ggsn)</a>
+<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="kw">library</span>(hypoimg)</a></code></pre></div>
+<pre><code>## --- Welcome to hypoimg ---</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw">library</span>(ggstance)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># setting up custom functions</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co"># function to crop shapefiles to plot extent </span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5">crp &lt;-<span class="st"> </span><span class="cf">function</span> (poly, <span class="dt">xlim =</span> xlim_boc, <span class="dt">ylim =</span> ylim_boc) {</a>
+<a class="sourceLine" id="cb33-6" data-line-number="6">  <span class="kw">st_intersection</span>(poly, </a>
+<a class="sourceLine" id="cb33-7" data-line-number="7">                  <span class="kw">st_set_crs</span>(<span class="kw">st_as_sf</span>(<span class="kw">as</span>(raster<span class="op">::</span><span class="kw">extent</span>(xlim[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb33-8" data-line-number="8">                                                        xlim[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb33-9" data-line-number="9">                                                        ylim[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb33-10" data-line-number="10">                                                        ylim[<span class="dv">2</span>]), </a>
+<a class="sourceLine" id="cb33-11" data-line-number="11">                                         <span class="st">&quot;SpatialPolygons&quot;</span>)),</a>
+<a class="sourceLine" id="cb33-12" data-line-number="12">                             <span class="kw">st_crs</span>(poly)))</a>
+<a class="sourceLine" id="cb33-13" data-line-number="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># function to turn a data.frame (with the columns</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="co"># &quot;Longitude&quot; and &quot;Latitude&quot;) into a spatial object</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3">tibble_to_sf &lt;-<span class="st"> </span><span class="cf">function</span>(tib, <span class="dt">crs =</span> <span class="dv">4326</span>){</a>
+<a class="sourceLine" id="cb34-4" data-line-number="4">  tib <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="st">    </span><span class="kw">st_as_sf</span>(., <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;Longitude&quot;</span>,<span class="st">&quot;Latitude&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="st">    </span><span class="kw">st_set_crs</span>(., crs)</a>
+<a class="sourceLine" id="cb34-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co"># funtion to fill empty cells (NA) with zeros </span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">replace_all_na &lt;-<span class="st"> </span><span class="cf">function</span>(tib, <span class="dt">replace =</span> <span class="dv">0</span>, <span class="dt">exclude =</span> <span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>, <span class="st">&quot;location&quot;</span>, <span class="st">&quot;group&quot;</span>,</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">                                                         <span class="st">&quot;habitat_type&quot;</span>, <span class="st">&quot;depth&quot;</span>)){</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">  nm_replace &lt;-<span class="st"> </span><span class="kw">names</span>(tib)[<span class="op">!</span>(<span class="kw">names</span>(tib) <span class="op">%in%</span><span class="st"> </span>exclude)]</a>
+<a class="sourceLine" id="cb35-5" data-line-number="5">  replace_list &lt;-<span class="st"> </span><span class="kw">rep</span>(replace,<span class="kw">length</span>(nm_replace)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="st">    </span><span class="kw">set_names</span>(<span class="dt">nm =</span> nm_replace) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="st">    </span><span class="kw">as.list</span>()</a>
+<a class="sourceLine" id="cb35-8" data-line-number="8">  </a>
+<a class="sourceLine" id="cb35-9" data-line-number="9">  tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">replace_na</span>(<span class="dt">replace =</span> replace_list)</a>
+<a class="sourceLine" id="cb35-10" data-line-number="10">}</a></code></pre></div>
+<div id="loading-data-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Loading data</h2>
+<p>Now, we are all set up and can start with the actual work.</p>
+<p>First, we need to import all the data sheets into R, starting with the survey data.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="co"># the actual script</span></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co"># setting the extent of the map</span></a>
+<a class="sourceLine" id="cb36-6" data-line-number="6">xlim_boc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">82.5</span>, <span class="dv">-82</span>)</a>
+<a class="sourceLine" id="cb36-7" data-line-number="7">ylim_boc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">9.1</span>, <span class="fl">9.47</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># reading the panama shape files and</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="co"># cropping it to the plot extent</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co"># (downloaded from https://www.gadm.org/download_country_v3.html)</span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">bocas &lt;-<span class="st"> </span><span class="kw">read_sf</span>(<span class="st">&#39;data/PAN_adm0.shp&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="st">  </span><span class="kw">crp</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># reading in the dive sites for the gps locations</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">sites &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/dive_spots - Sheet1.tsv&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(Site)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(Site, Latitude, Longitude)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># reading in the transect data, replacing NAs with zeros</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="co"># and merge with gps positions</span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3">transects &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/Fish_surveys - Sheet1.tsv&#39;</span>,</a>
+<a class="sourceLine" id="cb39-4" data-line-number="4">                      <span class="dt">col_types =</span> <span class="kw">str_c</span>(<span class="kw">c</span>(<span class="st">&#39;ccdc&#39;</span>,<span class="kw">rep</span>(<span class="st">&#39;d&#39;</span>, <span class="dv">78</span>)),<span class="dt">collapse =</span> <span class="st">&#39;&#39;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Site =</span> location <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_to_lower</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_remove</span>(<span class="st">&#39;_mangrove&#39;</span>),</a>
+<a class="sourceLine" id="cb39-6" data-line-number="6">         <span class="dt">Date =</span> Date <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-7" data-line-number="7"><span class="st">           </span><span class="kw">str_replace</span>(<span class="dt">pattern =</span> <span class="st">&quot;([0-9]*)/([0-9]*)/([0-9]*)&quot;</span>,</a>
+<a class="sourceLine" id="cb39-8" data-line-number="8">                       <span class="dt">replacement =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">3-</span><span class="ch">\\</span><span class="st">1-</span><span class="ch">\\</span><span class="st">2&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-9" data-line-number="9"><span class="st">           </span><span class="kw">as_date</span>(Date)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-10" data-line-number="10"><span class="st">  </span><span class="kw">replace_all_na</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-11" data-line-number="11"><span class="st">  </span><span class="kw">left_join</span>(sites)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co"># create a spatial object from the transects</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">transects_sf &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">tibble_to_sf</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># reading in the fish list for the fish families and create an ID column</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co"># for merging with the transect data</span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">fish_list &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/Fish_list_2020 - Sheet1.tsv&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(Common_name<span class="op">:</span><span class="st">`</span><span class="dt">Family (latin name)</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="st">  </span><span class="co"># format the fish id column which is going to be</span></a>
+<a class="sourceLine" id="cb41-6" data-line-number="6"><span class="st">  </span><span class="co"># used for the merging with the transect data</span></a>
+<a class="sourceLine" id="cb41-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fish_id =</span> Common_name )</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Common_name = col_character(),
+##   `Latin name` = col_character(),
+##   `Family (common name)` = col_character(),
+##   `Family (latin name)` = col_character(),
+##   Phase = col_character(),
+##   Abundance = col_character(),
+##   `Date (YYYY-MM-DD)` = col_character(),
+##   Comments = col_character(),
+##   Observer = col_character(),
+##   Checked = col_character()
+## )</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># pie shift is set to define the distance between</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="co"># the &quot;mangrove&quot; and &quot;reef&quot; pie for each location </span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3">pie_shift &lt;-<span class="st"> </span><span class="fl">.03</span></a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="co"># merge transect data and fish list</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2">summary_by_family &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="co"># we need unique identifiers for each transect,</span></a>
+<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="st">  </span><span class="co"># so we are going to assign a transet_nr_within_group </span></a>
+<a class="sourceLine" id="cb44-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(location, group) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">transet_nr_within_group  =</span> <span class="kw">row_number</span>(),</a>
+<a class="sourceLine" id="cb44-7" data-line-number="7">         <span class="dt">transect_id =</span> <span class="kw">str_c</span>(location, group,</a>
+<a class="sourceLine" id="cb44-8" data-line-number="8">                             transet_nr_within_group,</a>
+<a class="sourceLine" id="cb44-9" data-line-number="9">                             <span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-10" data-line-number="10"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-11" data-line-number="11"><span class="st">  </span><span class="co"># then we transform the data into &quot;long format&quot; to be able</span></a>
+<a class="sourceLine" id="cb44-12" data-line-number="12"><span class="st">  </span><span class="co"># to merge the family names based on the common name</span></a>
+<a class="sourceLine" id="cb44-13" data-line-number="13"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> bridled_goby<span class="op">:</span>porkfish,</a>
+<a class="sourceLine" id="cb44-14" data-line-number="14">               <span class="dt">names_to =</span> <span class="st">&#39;common_name&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-15" data-line-number="15"><span class="st">  </span><span class="co"># from the common name we create a fish id that is in the EXACT same</span></a>
+<a class="sourceLine" id="cb44-16" data-line-number="16"><span class="st">  </span><span class="co"># format as the fish id column of the fish list data frame</span></a>
+<a class="sourceLine" id="cb44-17" data-line-number="17"><span class="st">  </span><span class="co"># (this requires some reformating, eg. dropping &#39;_juvenile&#39;)</span></a>
+<a class="sourceLine" id="cb44-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fish_id =</span> common_name <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-19" data-line-number="19"><span class="st">           </span><span class="kw">str_remove</span>(<span class="st">&quot;_juvenile|juvenile_|initial_|intermediate_|juv_&quot;</span>))  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-20" data-line-number="20"><span class="st">  </span><span class="co"># merge with the fish list</span></a>
+<a class="sourceLine" id="cb44-21" data-line-number="21"><span class="st">  </span><span class="kw">left_join</span>(fish_list) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-22" data-line-number="22"><span class="st">     </span><span class="co"># filter(!duplicated(fish_id)) %&gt;%</span></a>
+<a class="sourceLine" id="cb44-23" data-line-number="23"><span class="st">     </span><span class="co"># View()</span></a>
+<a class="sourceLine" id="cb44-24" data-line-number="24"><span class="st">  </span><span class="co"># drop all row that do not have an entry in the</span></a>
+<a class="sourceLine" id="cb44-25" data-line-number="25"><span class="st">  </span><span class="co"># fish list (typos &amp; missing)</span></a>
+<a class="sourceLine" id="cb44-26" data-line-number="26"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(<span class="st">`</span><span class="dt">Latin name</span><span class="st">`</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-27" data-line-number="27"><span class="st">  </span><span class="co"># sum the count for each family at each habitat type of each location</span></a>
+<a class="sourceLine" id="cb44-28" data-line-number="28"><span class="st">  </span><span class="kw">group_by</span>(<span class="st">`</span><span class="dt">Family (latin name)</span><span class="st">`</span>, Site, habitat_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-29" data-line-number="29"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">sum</span>(value), <span class="dt">Latitude =</span> Latitude[[<span class="dv">1</span>]], <span class="dt">Longitude =</span> Longitude[[<span class="dv">1</span>]]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-30" data-line-number="30"><span class="st">  </span><span class="co"># transform back into &quot;wide format&quot;</span></a>
+<a class="sourceLine" id="cb44-31" data-line-number="31"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> <span class="st">`</span><span class="dt">Family (latin name)</span><span class="st">`</span>, <span class="dt">values_from =</span> n) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-32" data-line-number="32"><span class="st">  </span><span class="co"># adjust positions of pies</span></a>
+<a class="sourceLine" id="cb44-33" data-line-number="33"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grp =</span> <span class="kw">str_c</span>(Site, habitat_type, <span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>),</a>
+<a class="sourceLine" id="cb44-34" data-line-number="34">         <span class="dt">Longitude =</span> <span class="kw">ifelse</span>(habitat_type <span class="op">==</span><span class="st"> &#39;Reef&#39;</span>, Longitude <span class="op">-</span><span class="st"> </span><span class="fl">.5</span> <span class="op">*</span><span class="st"> </span>pie_shift, Longitude <span class="op">+</span><span class="st"> </span><span class="fl">.5</span> <span class="op">*</span><span class="st"> </span>pie_shift),</a>
+<a class="sourceLine" id="cb44-35" data-line-number="35">         <span class="dt">Latitude =</span> <span class="kw">ifelse</span>(habitat_type <span class="op">==</span><span class="st"> &#39;Reef&#39;</span>, Latitude <span class="op">-</span><span class="st"> </span><span class="fl">.5</span> <span class="op">*</span><span class="st"> </span>pie_shift, Latitude <span class="op">+</span><span class="st">  </span><span class="fl">.5</span> <span class="op">*</span>pie_shift))</a></code></pre></div>
+<pre><code>## Joining, by = &quot;fish_id&quot;</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co"># select the names of all present fish families</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">fish_columns &lt;-<span class="st"> </span><span class="kw">names</span>(summary_by_family)[<span class="op">!</span>(<span class="kw">names</span>(summary_by_family) <span class="op">%in%</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">                                             </span><span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>, <span class="st">&quot;Site&quot;</span>, <span class="st">&quot;habitat_type&quot;</span>, <span class="st">&quot;Latitude&quot;</span>,</a>
+<a class="sourceLine" id="cb46-4" data-line-number="4">                                               <span class="st">&quot;Longitude&quot;</span>, <span class="st">&quot;grp&quot;</span>))]</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co"># set color coding for habitat type</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2">clr_habitat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="st">  </span><span class="kw">set_names</span>(<span class="dt">nm =</span> <span class="kw">c</span>(<span class="st">&#39;Reef&#39;</span>, <span class="st">&#39;Mangrove&#39;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co"># import the compass image</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2">compass &lt;-<span class="st"> </span><span class="kw">hypo_read_svg</span>(<span class="st">&#39;north.svg&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="co"># plotting the map</span></a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb49-5" data-line-number="5"><span class="co"># initalize the plot</span></a>
+<a class="sourceLine" id="cb49-6" data-line-number="6"><span class="kw">ggplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-7" data-line-number="7"><span class="st">  </span><span class="co"># add the panama coastline</span></a>
+<a class="sourceLine" id="cb49-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> bocas)<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-9" data-line-number="9"><span class="st">  </span><span class="co"># add the sampling sites (as dots)</span></a>
+<a class="sourceLine" id="cb49-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> transects_sf)<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-11" data-line-number="11"><span class="st">  </span><span class="co"># add the pies</span></a>
+<a class="sourceLine" id="cb49-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_scatterpie</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Longitude, <span class="dt">y =</span> Latitude ,</a>
+<a class="sourceLine" id="cb49-13" data-line-number="13">                      <span class="dt">r =</span> <span class="fl">.6</span> <span class="op">*</span><span class="st"> </span>pie_shift , <span class="dt">group =</span> grp),</a>
+<a class="sourceLine" id="cb49-14" data-line-number="14">                  <span class="dt">data =</span> summary_by_family, <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb49-15" data-line-number="15">                  <span class="dt">cols =</span> fish_columns) <span class="op">+</span></a>
+<a class="sourceLine" id="cb49-16" data-line-number="16"><span class="st">  </span><span class="co"># add a color coded ring around the pie to indicate habitat type</span></a>
+<a class="sourceLine" id="cb49-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_circle</span>(<span class="dt">data =</span> summary_by_family,</a>
+<a class="sourceLine" id="cb49-18" data-line-number="18">              <span class="kw">aes</span>(<span class="dt">x0 =</span> Longitude, <span class="dt">y0 =</span> Latitude ,</a>
+<a class="sourceLine" id="cb49-19" data-line-number="19">                  <span class="dt">r =</span> <span class="fl">.6</span> <span class="op">*</span><span class="st"> </span>pie_shift, <span class="dt">color =</span> habitat_type )) <span class="op">+</span></a>
+<a class="sourceLine" id="cb49-20" data-line-number="20"><span class="st">  </span><span class="co"># add the scalebar</span></a>
+<a class="sourceLine" id="cb49-21" data-line-number="21"><span class="st">  </span><span class="kw">scalebar</span>(<span class="dt">x.min =</span> <span class="fl">-82.5</span>, <span class="dt">x.max =</span> <span class="fl">-82.3</span>,</a>
+<a class="sourceLine" id="cb49-22" data-line-number="22">           <span class="dt">y.min =</span> <span class="fl">9.13</span>, <span class="dt">y.max =</span> <span class="fl">9.17</span>,<span class="dt">transform =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb49-23" data-line-number="23">           <span class="dt">dist =</span> <span class="dv">10</span>, <span class="dt">dist_unit =</span> <span class="st">&quot;km&quot;</span>,</a>
+<a class="sourceLine" id="cb49-24" data-line-number="24">           <span class="dt">st.dist =</span> <span class="fl">.35</span>, <span class="dt">st.size =</span> <span class="fl">3.5</span>,</a>
+<a class="sourceLine" id="cb49-25" data-line-number="25">           <span class="dt">border.size =</span> <span class="fl">.1</span>, <span class="dt">height =</span> <span class="fl">.15</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-26" data-line-number="26"><span class="st">  </span><span class="co"># add the compass</span></a>
+<a class="sourceLine" id="cb49-27" data-line-number="27"><span class="st">  </span><span class="kw">annotation_custom</span>(<span class="dt">grob =</span> compass,</a>
+<a class="sourceLine" id="cb49-28" data-line-number="28">                    <span class="dt">xmin =</span> <span class="fl">-82.49</span>, <span class="dt">xmax =</span> <span class="fl">-82.44</span>,</a>
+<a class="sourceLine" id="cb49-29" data-line-number="29">                    <span class="dt">ymin =</span> <span class="fl">9.4</span>, <span class="dt">ymax =</span> <span class="fl">9.45</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-30" data-line-number="30"><span class="st">  </span><span class="co"># set the color palette for the pies</span></a>
+<a class="sourceLine" id="cb49-31" data-line-number="31"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">paletteer_c</span>(<span class="dt">n =</span> <span class="kw">length</span>(fish_columns),</a>
+<a class="sourceLine" id="cb49-32" data-line-number="32">                                         <span class="dt">palette =</span> <span class="st">&quot;ggthemes::Red-Green-Gold Diverging&quot;</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-33" data-line-number="33"><span class="st">  </span><span class="co"># set the color palette for the habitat types</span></a>
+<a class="sourceLine" id="cb49-34" data-line-number="34"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> clr_habitat, <span class="dt">guide =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb49-35" data-line-number="35">                     )<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-36" data-line-number="36"><span class="st">  </span><span class="co"># remove any &quot;extra space&quot; on the x and y axis</span></a>
+<a class="sourceLine" id="cb49-37" data-line-number="37"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-38" data-line-number="38"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-39" data-line-number="39"><span class="st">  </span><span class="co"># foramt the legend</span></a>
+<a class="sourceLine" id="cb49-40" data-line-number="40"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&#39;Family&#39;</span>,</a>
+<a class="sourceLine" id="cb49-41" data-line-number="41">                             <span class="dt">title.position =</span> <span class="st">&#39;top&#39;</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-42" data-line-number="42"><span class="st">  </span><span class="co"># twaek the plot appearance</span></a>
+<a class="sourceLine" id="cb49-43" data-line-number="43"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb49-44" data-line-number="44"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb49-45" data-line-number="45">        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
+<a class="sourceLine" id="cb49-46" data-line-number="46">        <span class="dt">legend.key.height =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
+<a class="sourceLine" id="cb49-47" data-line-number="47">        <span class="dt">legend.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&#39;lightgray&#39;</span>, </a>
+<a class="sourceLine" id="cb49-48" data-line-number="48">                                         <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)),</a>
+<a class="sourceLine" id="cb49-49" data-line-number="49">        <span class="dt">legend.position =</span> <span class="st">&#39;bottom&#39;</span>)</a></code></pre></div>
+<p><img src="piemap_files/figure-html/unnamed-chunk-16-1.png" width="1008" /></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">summary_by_family <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> Acanthuridae<span class="op">:</span>Urotrygonidae,</a>
+<a class="sourceLine" id="cb50-3" data-line-number="3">               <span class="dt">names_to =</span> <span class="st">&#39;Family&#39;</span>, <span class="dt">values_to =</span> <span class="st">&#39;n&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="kw">fct_reorder</span>(Family, n), <span class="dt">x =</span> n, <span class="dt">fill =</span> Family))<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_barh</span>(<span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-6" data-line-number="6"><span class="st">  </span><span class="kw">facet_grid</span>(habitat_type <span class="op">~</span><span class="st"> </span>Site)<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">paletteer_c</span>(<span class="dt">n =</span> <span class="kw">length</span>(fish_columns),</a>
+<a class="sourceLine" id="cb50-8" data-line-number="8">                                         <span class="dt">palette =</span> <span class="st">&quot;ggthemes::Red-Green-Gold Diverging&quot;</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-9" data-line-number="9"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&#39;Family&#39;</span>,</a>
+<a class="sourceLine" id="cb50-10" data-line-number="10">                             <span class="dt">title.position =</span> <span class="st">&#39;top&#39;</span>,<span class="dt">nrow =</span> <span class="dv">3</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb50-12" data-line-number="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb50-13" data-line-number="13">        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
+<a class="sourceLine" id="cb50-14" data-line-number="14">        <span class="dt">legend.key.height =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
+<a class="sourceLine" id="cb50-15" data-line-number="15">        <span class="dt">legend.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&#39;lightgray&#39;</span>, </a>
+<a class="sourceLine" id="cb50-16" data-line-number="16">                                         <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)),</a>
+<a class="sourceLine" id="cb50-17" data-line-number="17">        <span class="dt">legend.position =</span> <span class="st">&#39;bottom&#39;</span>)</a></code></pre></div>
+<p><img src="piemap_files/figure-html/unnamed-chunk-17-1.png" width="1008" /></p>
+
+<div id="refs" class="references">
+<div>
+<p>Anderson, Marti J. 2001. “A New Method for Non-Parametric Multivariate Analysis of Variance.” <em>Austral Ecology</em> 26 (1). Blackwell Science Pty: 32–46. <a href="https://doi.org/10.1111/j.1442-9993.2001.01070.pp.x">https://doi.org/10.1111/j.1442-9993.2001.01070.pp.x</a>.</p>
+</div>
+<div>
+<p>Anderson, Marti J, and Daniel C I Walsh. 2013. “PERMANOVA, ANOSIM, and the Mantel test in the face of heterogeneous dispersions: What null hypothesis are you testing?” <em>Ecological Monographs</em> 83 (4): 557–74. <a href="https://doi.org/10.1890/12-2010.1">https://doi.org/10.1890/12-2010.1</a>.</p>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="nmds-and-permanova.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

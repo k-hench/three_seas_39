@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 nMDS and Permanova | Three Seas 39 data analysis</title>
+  <meta name="description" content="Community analysis based on transects" />
+  <meta name="generator" content="bookdown 0.15 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 nMDS and Permanova | Three Seas 39 data analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Community analysis based on transects" />
+  <meta name="github-repo" content="k-hench/bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 nMDS and Permanova | Three Seas 39 data analysis" />
+  
+  <meta name="twitter:description" content="Community analysis based on transects" />
+  
+
+<meta name="author" content="Kosmas Hench" />
+
+
+<meta name="date" content="2020-01-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="pie-charts-on-map.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="../">Three Seas 39 data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Intro</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#before-you-start"><i class="fa fa-check"></i><b>1.1</b> Before you start</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-structure"><i class="fa fa-check"></i><b>1.2</b> Data structure</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html"><i class="fa fa-check"></i><b>2</b> nMDS and Permanova</a><ul>
+<li class="chapter" data-level="2.1" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#external-pacakges"><i class="fa fa-check"></i><b>2.1</b> External pacakges</a></li>
+<li class="chapter" data-level="2.2" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#custom-functions"><i class="fa fa-check"></i><b>2.2</b> Custom functions</a></li>
+<li class="chapter" data-level="2.3" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#loading-data"><i class="fa fa-check"></i><b>2.3</b> Loading data</a></li>
+<li class="chapter" data-level="2.4" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#run-nmds"><i class="fa fa-check"></i><b>2.4</b> Run nMDS</a></li>
+<li class="chapter" data-level="2.5" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#permanova"><i class="fa fa-check"></i><b>2.5</b> Permanova</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html"><i class="fa fa-check"></i><b>3</b> pie-charts on map</a><ul>
+<li class="chapter" data-level="3.1" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#loading-data-1"><i class="fa fa-check"></i><b>3.1</b> Loading data</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li> <image src="logo.svg" alt="Smiley face" style="width:100%; height:100px;"> </li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Three Seas 39 data analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="nmds-and-permanova" class="section level1">
+<h1><span class="header-section-number">2</span> nMDS and Permanova</h1>
+<div id="external-pacakges" class="section level2">
+<h2><span class="header-section-number">2.1</span> External pacakges</h2>
+<p>The script starts by loading all needed libraries.
+(Technically, the package lubridate is not important, I only used it to propperly format the date column, but the information is never used… )</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># loading all needed libraries</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">library</span>(ggalt)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw">library</span>(vegan)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">library</span>(lubridate)</a></code></pre></div>
+</div>
+<div id="custom-functions" class="section level2">
+<h2><span class="header-section-number">2.2</span> Custom functions</h2>
+<p>To make the code mode easily understandable (hopefully), we define some helper functions upfront (as opposed to “in the middle of the process”):</p>
+<p>At some point we will need to fill the empty celly of our data sheet with zeros - by default R will fill empty cells with <code>NA</code>.
+For this we create a function, that will replace <code>NA</code> in all columns of a data frame except for a specific subset of columns (the “non-fish” columns).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># setting up custom functions</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># funtion to fill empty cells (NA) with zeros </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">replace_all_na &lt;-<span class="st"> </span><span class="cf">function</span>(tib, <span class="dt">replace =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">                           <span class="dt">exclude =</span> <span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>, <span class="st">&quot;location&quot;</span>, <span class="st">&quot;group&quot;</span>,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">                                       <span class="st">&quot;habitat_type&quot;</span>, <span class="st">&quot;depth&quot;</span>)){</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">  <span class="co"># get all fish columns (&quot;non-non-fish-columns&quot;) </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">  nm_replace &lt;-<span class="st"> </span><span class="kw">names</span>(tib)[<span class="op">!</span>(<span class="kw">names</span>(tib) <span class="op">%in%</span><span class="st"> </span>exclude)]</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">  <span class="co"># create a replacement list in the form of: list(fish_1 = 0, fish_2 = 0, ...)</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">  replace_list &lt;-<span class="st"> </span><span class="kw">rep</span>(replace,<span class="kw">length</span>(nm_replace)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="st">    </span><span class="kw">set_names</span>(<span class="dt">nm =</span> nm_replace) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="st">    </span><span class="kw">as.list</span>()</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">  </a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">  <span class="co"># apply replacement list</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">  tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">replace_na</span>(<span class="dt">replace =</span> replace_list)</a>
+<a class="sourceLine" id="cb5-18" data-line-number="18">}</a></code></pre></div>
+<p>To make plotting the nMDS results with ggplot a little easier, we create a export function that will take the nMDS results as input and return a list with two data sets (<code>output_name$spots</code> - the transect scores and <code>output_name$species</code> - the species “influence”).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># funtion to export nmds results for plotting with ggplot</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">export_nmds &lt;-<span class="st"> </span><span class="cf">function</span>(tib, nmds, <span class="dt">score_name =</span> <span class="st">&quot;Spot&quot;</span>, <span class="dt">species_name =</span> <span class="st">&quot;Species&quot;</span>){</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="co"># doublecheck that rownames are uniqe,</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="co"># otherwise the merge at the end duplicates entries </span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="cf">if</span>(<span class="kw">any</span>(<span class="kw">duplicated</span>(<span class="kw">rownames</span>(<span class="kw">scores</span>(nmds))))){</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">    <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Sorry, the rownames of the distance matrix need to be unique.</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">               Currently that is not the case:</span><span class="ch">\n\n</span><span class="st"> &quot;</span>, </a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">               <span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&#39;!&#39;</span>,<span class="st">&#39; &#39;</span>)[<span class="dv">2</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">duplicated</span>(<span class="kw">rownames</span>(<span class="kw">scores</span>(nmds))) <span class="op">|</span><span class="st"> </span><span class="kw">duplicated</span>(<span class="kw">rownames</span>(<span class="kw">scores</span>(nmds)),</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">                                                                                     <span class="dt">fromLast =</span> <span class="ot">TRUE</span>))],</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">                     <span class="kw">rownames</span>(<span class="kw">scores</span>(nmds)),</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">                     <span class="dt">collapse =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">  &#39;</span>)))</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">  }</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">  <span class="co"># export obesravtions in nMDS space</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">  data_scores &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">scores</span>(nmds)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">    </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> score_name)</a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">  <span class="co"># export species in nMDS space</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18">  data_species &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">scores</span>(nmds, <span class="st">&quot;species&quot;</span>))<span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="st">    </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> species_name)</a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">  </a>
+<a class="sourceLine" id="cb6-21" data-line-number="21">  <span class="kw">list</span>(<span class="dt">spots =</span> tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(data_scores),</a>
+<a class="sourceLine" id="cb6-22" data-line-number="22">       <span class="dt">species =</span> data_species)</a>
+<a class="sourceLine" id="cb6-23" data-line-number="23">}</a></code></pre></div>
+</div>
+<div id="loading-data" class="section level2">
+<h2><span class="header-section-number">2.3</span> Loading data</h2>
+<p>Now, we are all set up and can start with the actual work.</p>
+<p>First, we need to import the survey data into R.</p>
+<p>Directly while importing we deal with some issues:</p>
+<ul>
+<li>we extract the <em>pure</em> site name from the <code>location</code> column (dropping the <code>_mangrove</code> suffix)</li>
+<li>we proppely format the date (actually transforming the column from <code>character</code> into <code>date</code>-type)</li>
+<li>since we have several transects per group, we number the transects within each group</li>
+<li>from the columns <code>Site</code>, <code>habitat_type</code>, <code>group</code> and <code>transet_nr_within_group</code> we create a unique identifier for each transect</li>
+<li>finally, we use the previously prepared function to replace all empty fish-cells with zeros</li>
+</ul>
+<p style="color:#f0a830">
+Beware of the <code>col_types = str_c(c('ccdc',rep('d', 78)),collapse = '')</code> part: here we define the column types (c = character, d = “double”/number). So I the original google sheet changes (eg. by a merge og “blue hamlet” and “black hamlet”) the <code>78</code> needs to be updated to <em>the total number of columns</em> - 4!
+</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># ----------------------------------</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># the actual script</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># -----------------------------------</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># reading in the transect data and replacing NAs with zeros</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">transects &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/Fish_surveys - Sheet1.tsv&#39;</span>,</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">                      <span class="dt">col_types =</span> <span class="kw">str_c</span>(<span class="kw">c</span>(<span class="st">&#39;ccdc&#39;</span>,<span class="kw">rep</span>(<span class="st">&#39;d&#39;</span>, <span class="dv">78</span>)),<span class="dt">collapse =</span> <span class="st">&#39;&#39;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="co"># we need unique identifiers for each transect,</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="st">  </span><span class="co"># so we are going to assign a transet_nr_within_group </span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw">group_by</span>(location, group) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Site =</span> location <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_to_lower</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_remove</span>(<span class="st">&#39;_mangrove&#39;</span>),</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">         <span class="dt">transet_nr_within_group  =</span> <span class="kw">row_number</span>(),</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">         <span class="dt">Date =</span> Date <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="st">           </span><span class="kw">str_replace</span>(<span class="dt">pattern =</span> <span class="st">&quot;([0-9]*)/([0-9]*)/([0-9]*)&quot;</span>,</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">                       <span class="dt">replacement =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">3-</span><span class="ch">\\</span><span class="st">1-</span><span class="ch">\\</span><span class="st">2&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">           </span><span class="kw">as_date</span>(Date),</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">         <span class="dt">Transect_id =</span> <span class="kw">str_c</span>(Site, habitat_type, group,</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">                             transet_nr_within_group ,<span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">  </span><span class="kw">replace_all_na</span>()</a></code></pre></div>
+<pre><code>## Warning: Missing column names filled in: &#39;X74&#39; [74]</code></pre>
+<p>After a first check, I realised that we will need to merge the observations within each group (eg. line 2 &amp; 3 or line 4 &amp; 5 of the original google sheet) - here we merge several rows of the data set.</p>
+<p>We also need to merge the observations over different stages (eg. juvenile_bluehead_wrasse &amp; bluehead_wrasse) - here we merge several columns.</p>
+<p>To do this merging we are going to apply some tidyverse-magic (using functions from the packages <a href="https://tidyr.tidyverse.org/">tidyr</a> and <a href="https://dplyr.tidyverse.org/">dplyr</a>).</p>
+<p>If you have difficulties following these rather complex steps, it might be helpful to highlight and execute just parts of the code (to see what is going on you will allways need to start with <code>transects %&gt;%</code> and NOT highlight the <code>transects &lt;-</code> bit):</p>
+<p><img src="img/highlight.png" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># merge by group and fish id</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">transects &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="co"># transfrom the data from &quot;wide&quot; into &quot;long&quot; format</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="co"># note that we select the fish columns here, so the bridled_goby:porkfish</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="co"># part might need to be updated if the google cheet changes to the</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="co"># form of fist_fish:last_fish</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> bridled_goby<span class="op">:</span>porkfish,</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">               <span class="dt">names_to =</span> <span class="st">&#39;common_name&#39;</span>,</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">               <span class="dt">values_to =</span> <span class="st">&#39;n&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="co"># create a new column with the fish species (irrespective of stage)</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fish_id =</span> common_name <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="st">           </span><span class="kw">str_remove</span>(<span class="st">&quot;_juvenile|juvenile_|initial_&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="st">  </span><span class="co"># set the logic to summarise over (we want one entry per species</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="st">  </span><span class="co"># for every site, habitat_type and group)</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="st">  </span><span class="kw">group_by</span>(Site, habitat_type, group, fish_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="st">  </span><span class="co"># summ the counts according to our grouping</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">sum</span>(n)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="st">  </span><span class="co"># remove the grouping (the effect of this is not visible,</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="st">  </span><span class="co"># but if we don&#39;t do this the data table might behave strange later on..)</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="st">  </span><span class="co"># reformat back to wide format (note that now the species are sorted alphabetically)</span></a>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> fish_id,</a>
+<a class="sourceLine" id="cb9-23" data-line-number="23">              <span class="dt">values_from =</span> n) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-24" data-line-number="24"><span class="st">  </span><span class="co"># Since we now have only a single entry per group,</span></a>
+<a class="sourceLine" id="cb9-25" data-line-number="25"><span class="st">  </span><span class="co"># we update our transect identifiers</span></a>
+<a class="sourceLine" id="cb9-26" data-line-number="26"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Transect_id =</span> <span class="kw">str_c</span>(Site, habitat_type, group, <span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>))</a></code></pre></div>
+<p>For some reason, some transects are completely empty (0 for all species).
+These are not informative in terms of community composition and need to be dropped from the data table (otherwise the nMDS will fail because there is no way to compute ecological distances with those transects).
+To check for this, we create a new column with the sum of all fish for each transect.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">transects &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">total_count =</span> transects <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">           </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">           </span><span class="kw">select</span>(<span class="op">-</span>(Site<span class="op">:</span>group),<span class="op">-</span>Transect_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">           </span><span class="kw">rowSums</span>())</a></code></pre></div>
+<p>Now we filter all transects that have a total count of zero.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">transects &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(total_count <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a></code></pre></div>
+</div>
+<div id="run-nmds" class="section level2">
+<h2><span class="header-section-number">2.4</span> Run nMDS</h2>
+<p>So far, we have worked with our data in the format of a <code>data.frame</code>, yet the nMDS expects a <code>matrix</code> (this just some internal stuff in R that has to do with the data stucture and you don’t rally have to worry about…).</p>
+<p>To prepare the nMDS input we select only the fish columns (<span style="color:#f0a830">note that the column order has changed and the fish are now sorted alphabetically</span>) and convert these columns into a matrix.</p>
+<p>We store the transect ids in the <code>rownames</code> of the matrix (this is no data <em>within</em> the matrix and hence not considdered for the analysis).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">data_matrix &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(atlantic_spadefish<span class="op">:</span>yellowtail_snapper) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">as.matrix</span>()</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">rownames</span>(data_matrix) &lt;-<span class="st"> </span>transects<span class="op">$</span>Transect_id</a></code></pre></div>
+<p>Now we can run the nMDS on our data and export the results for ggplot.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">data_nmds &lt;-<span class="st"> </span><span class="kw">metaMDS</span>(data_matrix, <span class="dt">k =</span> <span class="dv">2</span>, <span class="dt">trymax =</span> <span class="dv">999</span>, <span class="dt">distance=</span><span class="st">&#39;bray&#39;</span>)</a></code></pre></div>
+<pre><code>## Square root transformation
+## Wisconsin double standardization
+## Run 0 stress 0.2054951 
+## Run 1 stress 0.2054983 
+## ... Procrustes: rmse 0.0006722222  max resid 0.003395532 
+## ... Similar to previous best
+## Run 2 stress 0.2124823 
+## Run 3 stress 0.2076941 
+## Run 4 stress 0.2089365 
+## Run 5 stress 0.2110226 
+## Run 6 stress 0.2089032 
+## Run 7 stress 0.2167602 
+## Run 8 stress 0.2056537 
+## ... Procrustes: rmse 0.01053094  max resid 0.05937644 
+## Run 9 stress 0.2084414 
+## Run 10 stress 0.2061962 
+## Run 11 stress 0.2253049 
+## Run 12 stress 0.2061956 
+## Run 13 stress 0.2268553 
+## Run 14 stress 0.2101235 
+## Run 15 stress 0.2244898 
+## Run 16 stress 0.2089349 
+## Run 17 stress 0.2076972 
+## Run 18 stress 0.2076924 
+## Run 19 stress 0.2089023 
+## Run 20 stress 0.208453 
+## *** Solution reached</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># you can also try plot(data_nmds) at this point</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">data_nmds_results &lt;-<span class="st"> </span><span class="kw">export_nmds</span>(transects, data_nmds, <span class="dt">score_name =</span> <span class="st">&#39;Transect_id&#39;</span>)</a></code></pre></div>
+<pre><code>## Joining, by = &quot;Transect_id&quot;</code></pre>
+<p>To look at the results we plot the exported data and color by habitat type:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data_nmds_results<span class="op">$</span>spots,</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">       <span class="kw">aes</span>(<span class="dt">x =</span> NMDS1, <span class="dt">y =</span> NMDS2,</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">           <span class="dt">group =</span> habitat_type)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="co"># nMDS needs equal axis</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="st">  </span><span class="co"># add lines for x = 0 and y = 0</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&#39;lightgray&#39;</span>, <span class="dt">alpha =</span> <span class="fl">.4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&#39;lightgray&#39;</span>, <span class="dt">alpha =</span> <span class="fl">.4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="st">  </span><span class="co"># add indication of species influence</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">inherit.aes =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb17-11" data-line-number="11">            <span class="dt">data =</span> data_nmds_results<span class="op">$</span>species,</a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">            <span class="kw">aes</span>(<span class="dt">x =</span> NMDS1, <span class="dt">y =</span> NMDS2, <span class="dt">label =</span> Species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="st">  </span><span class="co"># add scoring of the transects</span></a>
+<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> habitat_type), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="st">  </span><span class="co"># add the outer hull for each habitat type</span></a>
+<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_encircle</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> habitat_type, <span class="dt">fill =</span> habitat_type), </a>
+<a class="sourceLine" id="cb17-17" data-line-number="17">                <span class="dt">s_shape =</span> <span class="dv">1</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">expand =</span> <span class="dv">0</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb17-18" data-line-number="18"><span class="st">  </span><span class="co"># add a little space on either side of the plot (for text)</span></a>
+<a class="sourceLine" id="cb17-19" data-line-number="19"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(.<span class="dv">01</span>,.<span class="dv">05</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb17-20" data-line-number="20"><span class="st">  </span><span class="co"># adjust plot layout</span></a>
+<a class="sourceLine" id="cb17-21" data-line-number="21"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;bottom&#39;</span>,</a>
+<a class="sourceLine" id="cb17-22" data-line-number="22">        <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb17-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb17-24" data-line-number="24"><span class="co"># print plot</span></a>
+<a class="sourceLine" id="cb17-25" data-line-number="25">p1</a></code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_text).</code></pre>
+<p><img src="nmds_files/figure-html/unnamed-chunk-10-1.png" width="1008" /></p>
+<p>Alternatively we can highlight the differnt sites using color.</p>
+<p>Note that all that has changed here is several replacements from <code>colour = habitat_type</code> to <code>colour = Site</code> - same for <code>fill =</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data_nmds_results<span class="op">$</span>spots,</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">       <span class="kw">aes</span>(<span class="dt">x =</span> NMDS1, <span class="dt">y =</span> NMDS2,</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">           <span class="dt">group =</span> Site)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="co"># nMDS needs equal axis</span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="st">  </span><span class="co"># add lines for x = 0 and y = 0</span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&#39;lightgray&#39;</span>, <span class="dt">alpha =</span> <span class="fl">.4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&#39;lightgray&#39;</span>, <span class="dt">alpha =</span> <span class="fl">.4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="st">  </span><span class="co"># add indication of species influence</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">inherit.aes =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb19-11" data-line-number="11">            <span class="dt">data =</span> data_nmds_results<span class="op">$</span>species,</a>
+<a class="sourceLine" id="cb19-12" data-line-number="12">            <span class="kw">aes</span>(<span class="dt">x =</span> NMDS1, <span class="dt">y =</span> NMDS2, <span class="dt">label =</span> Species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="st">  </span><span class="co"># add scoring of the transects</span></a>
+<a class="sourceLine" id="cb19-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Site), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-15" data-line-number="15"><span class="st">  </span><span class="co"># add the outer hull for each site</span></a>
+<a class="sourceLine" id="cb19-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_encircle</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Site, <span class="dt">fill =</span> Site),</a>
+<a class="sourceLine" id="cb19-17" data-line-number="17">                <span class="dt">s_shape =</span> <span class="dv">1</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">expand =</span> <span class="dv">0</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb19-18" data-line-number="18"><span class="st">  </span><span class="co"># add a little space on either side of the plot (for text)</span></a>
+<a class="sourceLine" id="cb19-19" data-line-number="19"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(.<span class="dv">01</span>,.<span class="dv">05</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb19-20" data-line-number="20"><span class="st">  </span><span class="co"># adjust plot layout</span></a>
+<a class="sourceLine" id="cb19-21" data-line-number="21"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;bottom&#39;</span>,</a>
+<a class="sourceLine" id="cb19-22" data-line-number="22">        <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb19-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb19-24" data-line-number="24"><span class="co"># print plot</span></a>
+<a class="sourceLine" id="cb19-25" data-line-number="25">p2</a></code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_text).</code></pre>
+<p><img src="nmds_files/figure-html/unnamed-chunk-11-1.png" width="1008" /></p>
+<p>we can export these plots using <code>ggsave()</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;nmds_by_haitat_type.pdf&#39;</span>, <span class="dt">plot =</span> p1, <span class="dt">width =</span> <span class="dv">9</span>, <span class="dt">height =</span> <span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;nmds_by_site.pdf&#39;</span>, <span class="dt">plot =</span> p2, <span class="dt">width =</span> <span class="dv">9</span>, <span class="dt">height =</span> <span class="dv">9</span>)</a></code></pre></div>
+</div>
+<div id="permanova" class="section level2">
+<h2><span class="header-section-number">2.5</span> Permanova</h2>
+<p>We can gain som insight from the nMDS plots, but if we want to check if the clusters on the nMDS are actually significantly differnt, we need to run a Permanova.</p>
+<p>The Permanova is also based on ecological differnces between the transects (just like nMDS), but here we need to compute the ourselves (nMDS does this step internally).</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># Permanova ------------------</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co"># compute ecological distances between the transects</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">distances &lt;-<span class="st"> </span><span class="kw">vegdist</span>(data_matrix, </a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">                     <span class="dt">distance =</span> <span class="st">&#39;bray&#39;</span>)</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co"># export the hapitat types according to order of the distance matrix</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">distances_groups &lt;-<span class="st"> </span>transects[<span class="kw">match</span>(<span class="kw">labels</span>(distances),</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">                                       transects<span class="op">$</span>Transect_id),]<span class="op">$</span>habitat_type</a></code></pre></div>
+<p>One point we unfortunately could not discuss in class (because of time 😢), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.</p>
+<p>So, before we start, we need to check if the assumptions for permanova are met by our data <span class="citation">(Anderson <a href="#ref-Anderson01">2001</a>)</span>:</p>
+<center>
+<em>“The only assumption of the test is that […] the observations are independent and that they have similar distributions”</em>
+</center>
+<p>This means that our data should be <em>homogeneous dispersed</em> - our clusters should be of approximately equal size (similar to equal variances when running an ANOVA or a t-test).
+The idea here is that if the clusters are of differnt sizes, the permanova might give a significant result because of the size diffence and not because of a difference in location of the clusters on the nMDS.</p>
+<p>To check for homogeneous dispersion, we can either use a statistical test (permutation test) or visualize the dispersion.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># For the test for homogeneous dispersion we nee to compute the</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co"># distance of each transect to the center of its respective cluster</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co"># (s. https://k-hench.github.io/nmds/nmds.html#9 )</span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">distances_betadispersion &lt;-<span class="st"> </span><span class="kw">betadisper</span>(distances, </a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">                                       distances_groups)</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co"># test homogenous dispersion</span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="kw">permutest</span>(distances_betadispersion) </a></code></pre></div>
+<pre><code>## 
+## Permutation test for homogeneity of multivariate dispersions
+## Permutation: free
+## Number of permutations: 999
+## 
+## Response: Distances
+##           Df Sum Sq  Mean Sq      F N.Perm Pr(&gt;F)  
+## Groups     1 0.1401 0.140096 4.0667    999  0.051 .
+## Residuals 44 1.5158 0.034449                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Here, we hope for a p-value larger than 0.05, since a value smaller than 0.05 would tell us that the dispersions of our clusters are indeed differnt (that the clusters are of different size).</p>
+<p>We can also inspect the distances of all transects to the center of their respective cluster visually for the same inforamtion:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">tibble</span>(<span class="dt">distances =</span> distances_betadispersion<span class="op">$</span>distances,</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">       <span class="dt">habitat_type =</span> distances_betadispersion<span class="op">$</span>group) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> habitat_type, <span class="dt">y =</span> distances, <span class="dt">fill =</span> habitat_type))<span class="op">+</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<p><img src="nmds_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>At the stage when I checked the data it looked like our data is very borderline - actually the clusters for mangrove and reef seem to be of different sizes.</p>
+<p>Fortunately the author of permanova basically told people to chill in such situations as long as their experimantal design was balanced <span class="citation">(Anderson and Walsh <a href="#ref-Anderson13">2013</a>)</span>:</p>
+<center>
+<em>“In contrast, PERMANOVA and Pillai’s trace were largely unaffected by heterogeneity for balanced designs”</em>
+</center>
+<p>So, lets quickly doublecheck:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">transects <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(habitat_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+## # Groups:   habitat_type [2]
+##   habitat_type     n
+##   &lt;chr&gt;        &lt;int&gt;
+## 1 Mangrove        22
+## 2 Reef            24</code></pre>
+<p>To me 22/24 seems reasonably balanced, so we finally run the permanova:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">data_permanova &lt;-<span class="st"> </span><span class="kw">adonis</span>(<span class="dt">formula =</span> distances <span class="op">~</span><span class="st"> </span>distances_groups,</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">                         <span class="dt">permutations =</span> <span class="dv">999</span>, <span class="dt">method =</span> <span class="st">&#39;bray&#39;</span>)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="kw">print</span>(data_permanova) </a></code></pre></div>
+<pre><code>## 
+## Call:
+## adonis(formula = distances ~ distances_groups, permutations = 999,      method = &quot;bray&quot;) 
+## 
+## Permutation: free
+## Number of permutations: 999
+## 
+## Terms added sequentially (first to last)
+## 
+##                  Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+## distances_groups  1    3.9133  3.9133  14.904 0.25302  0.001 ***
+## Residuals        44   11.5528  0.2626         0.74698           
+## Total            45   15.4660                 1.00000           
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>At this point it is up to you to interpret the results - as far as stats go we’re done.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Anderson01">
+<p>Anderson, Marti J. 2001. “A New Method for Non-Parametric Multivariate Analysis of Variance.” <em>Austral Ecology</em> 26 (1). Blackwell Science Pty: 32–46. <a href="https://doi.org/10.1111/j.1442-9993.2001.01070.pp.x">https://doi.org/10.1111/j.1442-9993.2001.01070.pp.x</a>.</p>
+</div>
+<div id="ref-Anderson13">
+<p>Anderson, Marti J, and Daniel C I Walsh. 2013. “PERMANOVA, ANOSIM, and the Mantel test in the face of heterogeneous dispersions: What null hypothesis are you testing?” <em>Ecological Monographs</em> 83 (4): 557–74. <a href="https://doi.org/10.1890/12-2010.1">https://doi.org/10.1890/12-2010.1</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pie-charts-on-map.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

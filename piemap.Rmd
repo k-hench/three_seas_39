@@ -1,3 +1,24 @@
+---
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+# pie-charts on map
+
+Note that we need to drop the following entries unless you know their family:
+
+- little_grey_guys
+- little_guys_green
+
+Also, the following species need to be added to the fish list:
+
+- flagfin_mojarra
+- grey_snapper
+- bearded_toadfish
+- blue hamlet (unless changed to black hamlet)
+
+
+```{r, warning = FALSE, message = FALSE}
 # loading all needed libraries
 # -----------------------------------
 library(tidyverse)
@@ -8,7 +29,11 @@ library(ggforce)
 library(ggsn)
 library(hypoimg)
 library(lubridate)
+library(ggstance)
+```
 
+
+```{r}
 # setting up custom functions
 # -----------------------------------
 
@@ -22,7 +47,10 @@ crp <- function (poly, xlim = xlim_boc, ylim = ylim_boc) {
                                          "SpatialPolygons")),
                              st_crs(poly)))
 }
+```
 
+
+```{r}
 # function to turn a data.frame (with the columns
 # "Longitude" and "Latitude") into a spatial object
 tibble_to_sf <- function(tib, crs = 4326){
@@ -30,7 +58,10 @@ tibble_to_sf <- function(tib, crs = 4326){
     st_as_sf(., coords = c("Longitude","Latitude")) %>%
     st_set_crs(., crs)
 }
+```
 
+
+```{r}
 # funtion to fill empty cells (NA) with zeros 
 replace_all_na <- function(tib, replace = 0, exclude = c("Date", "location", "group",
                                                          "habitat_type", "depth")){
@@ -41,7 +72,15 @@ replace_all_na <- function(tib, replace = 0, exclude = c("Date", "location", "gr
   
   tib %>% replace_na(replace = replace_list)
 }
+```
 
+## Loading data
+
+Now, we are all set up and can start with the actual work.
+
+First, we need to import all the data sheets into R, starting with the survey data.
+
+```{r}
 # -----------------------------------
 # the actual script
 # -----------------------------------
@@ -49,19 +88,27 @@ replace_all_na <- function(tib, replace = 0, exclude = c("Date", "location", "gr
 # setting the extent of the map
 xlim_boc <- c(-82.5, -82)
 ylim_boc <- c(9.1, 9.47)
+```
 
 
+```{r, warning = FALSE, message = FALSE} 
 # reading the panama shape files and
 # cropping it to the plot extent
 # (downloaded from https://www.gadm.org/download_country_v3.html)
 bocas <- read_sf('data/PAN_adm0.shp') %>%
   crp()
+```
 
+
+```{r, warning = FALSE, message = FALSE}
 # reading in the dive sites for the gps locations
 sites <- read_tsv('data/dive_spots - Sheet1.tsv') %>%
   filter(!duplicated(Site)) %>%
   select(Site, Latitude, Longitude)
+```
 
+
+```{r, warning = FALSE, message = FALSE}
 # reading in the transect data, replacing NAs with zeros
 # and merge with gps positions
 transects <- read_tsv('data/Fish_surveys - Sheet1.tsv',
@@ -73,26 +120,35 @@ transects <- read_tsv('data/Fish_surveys - Sheet1.tsv',
            as_date(Date)) %>%
   replace_all_na() %>%
   left_join(sites)
+```
 
+
+```{r}
 # create a spatial object from the transects
 transects_sf <- transects %>%
   tibble_to_sf()
+```
 
+
+```{r}
 # reading in the fish list for the fish families and create an ID column
 # for merging with the transect data
 fish_list <- read_tsv('data/Fish_list_2020 - Sheet1.tsv') %>%
   select(Common_name:`Family (latin name)`) %>%
   # format the fish id column which is going to be
   # used for the merging with the transect data
-  mutate(fish_id = Common_name )# %>%
-           # str_to_lower() %>% 
-           # str_replace_all(pattern = ' ', 
-           #                 replacement = '_'))
+  mutate(fish_id = Common_name )
+```
 
+
+```{r}
 # pie shift is set to define the distance between
 # the "mangrove" and "reef" pie for each location 
 pie_shift <- .03
+```
 
+
+```{r}
 # merge transect data and fish list
 summary_by_family <- transects %>%
   # we need unique identifiers for each transect,
@@ -111,13 +167,7 @@ summary_by_family <- transects %>%
   # format as the fish id column of the fish list data frame
   # (this requires some reformating, eg. dropping '_juvenile')
   mutate(fish_id = common_name %>% 
-           str_remove("_juvenile|juvenile_|initial_|intermediate_|juv_"))  %>%# View()
-  #          str_replace(pattern = 'brown_chrosmis_damselfish',
-  #                      replacement = 'brown_chromis') %>%
-  # str_replace(pattern = 'graysby_grouper',
-  #             replacement = 'graysby') %>%
-  # str_replace(pattern = 'doctor_surgeonfish',
-  #             replacement = 'doctorfish')) %>%
+           str_remove("_juvenile|juvenile_|initial_|intermediate_|juv_"))  %>%
   # merge with the fish list
   left_join(fish_list) %>% 
      # filter(!duplicated(fish_id)) %>%
@@ -127,26 +177,38 @@ summary_by_family <- transects %>%
   filter(!is.na(`Latin name`)) %>%
   # sum the count for each family at each habitat type of each location
   group_by(`Family (latin name)`, Site, habitat_type) %>%
-  summarise(n = sum(value),Latitude = Latitude[[1]], Longitude = Longitude[[1]]) %>%
+  summarise(n = sum(value), Latitude = Latitude[[1]], Longitude = Longitude[[1]]) %>%
   # transform back into "wide format"
   pivot_wider(names_from = `Family (latin name)`, values_from = n) %>%
   # adjust positions of pies
   mutate(grp = str_c(Site, habitat_type, sep = '_'),
          Longitude = ifelse(habitat_type == 'Reef', Longitude - .5 * pie_shift, Longitude + .5 * pie_shift),
          Latitude = ifelse(habitat_type == 'Reef', Latitude - .5 * pie_shift, Latitude +  .5 *pie_shift))
+```
 
+
+```{r}
 # select the names of all present fish families
 fish_columns <- names(summary_by_family)[!(names(summary_by_family) %in%
                                              c("Date", "Site", "habitat_type", "Latitude",
                                                "Longitude", "grp"))]
+```
 
+
+```{r}
 # set color coding for habitat type
 clr_habitat <- c(rgb(0,0,0), rgb(1,1,1)) %>% 
   set_names(nm = c('Reef', 'Mangrove'))
+```
 
+
+```{r}
 # import the compass image
 compass <- hypo_read_svg('north.svg')
+```
 
+
+```{r, fig.width = 10.5, fig.height = 10.5}
 # -----------------------------------
 # plotting the map
 # -----------------------------------
@@ -187,11 +249,7 @@ ggplot()+
   scale_y_continuous(expand = c(0,0))+
   # foramt the legend
   guides(fill = guide_legend(title = 'Family',
-                             title.position = 'top')#,
-         # color = guide_legend(title = 'Habitat type',
-         #                     title.position = 'top',
-         #                     ncol = 1,override.aes = list(shape = 2))
-         )+
+                             title.position = 'top'))+
   # twaek the plot appearance
   theme_minimal() +
   theme(axis.title = element_blank(),
@@ -200,12 +258,13 @@ ggplot()+
         legend.background = element_rect(fill = 'lightgray', 
                                          color = rgb(1,1,1,0)),
         legend.position = 'bottom')
+```
 
-library(ggstance)
+
+```{r, fig.width = 10.5, fig.height = 10.5}
 summary_by_family %>%
   pivot_longer(cols = Acanthuridae:Urotrygonidae,
                names_to = 'Family', values_to = 'n') %>%
-  # mutate(Family = fct_reorder(Family, n)) %>%
   ggplot(aes(y = fct_reorder(Family, n), x = n, fill = Family))+
   geom_barh(stat = 'identity')+
   facet_grid(habitat_type ~ Site)+
@@ -220,3 +279,5 @@ summary_by_family %>%
         legend.background = element_rect(fill = 'lightgray', 
                                          color = rgb(1,1,1,0)),
         legend.position = 'bottom')
+```
+
