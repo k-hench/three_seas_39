@@ -3,7 +3,12 @@ output: html_document
 editor_options:
   chunk_output_type: console
 ---
+
 # pie-charts on map
+
+```{r, include = FALSE}
+library(cowplot)
+```
 
 Note that we need to drop the following entries unless you know their family:
 
@@ -208,7 +213,7 @@ compass <- hypo_read_svg('north.svg')
 ```
 
 
-```{r, fig.width = 10.5, fig.height = 10.5}
+```{r, eval = FALSE, fig.width = 10.5, fig.height = 10.5}
 # -----------------------------------
 # plotting the map
 # -----------------------------------
@@ -260,8 +265,60 @@ ggplot()+
         legend.position = 'bottom')
 ```
 
+```{r, echo = FALSE, fig.width = 10.5, fig.height = 10.5}
+# -----------------------------------
+# plotting the map
+# -----------------------------------
 
-```{r, fig.width = 10.5, fig.height = 10.5}
+# initalize the plot
+ggdraw(ggplot()+
+  # add the panama coastline
+  geom_sf(data = bocas)+
+  # add the sampling sites (as dots)
+  geom_sf(data = transects_sf)+
+  # add the pies
+  geom_scatterpie(aes(x = Longitude, y = Latitude ,
+                      r = .6 * pie_shift , group = grp),
+                  data = summary_by_family, color = rgb(1,1,1,0),
+                  cols = fish_columns) +
+  # add a color coded ring around the pie to indicate habitat type
+  geom_circle(data = summary_by_family,
+              aes(x0 = Longitude, y0 = Latitude ,
+                  r = .6 * pie_shift, color = habitat_type )) +
+  # add the scalebar
+  scalebar(x.min = -82.5, x.max = -82.3,
+           y.min = 9.13, y.max = 9.17,transform = TRUE,
+           dist = 10, dist_unit = "km",
+           st.dist = .35, st.size = 3.5,
+           border.size = .1, height = .15)+
+  # add the compass
+  annotation_custom(grob = compass,
+                    xmin = -82.49, xmax = -82.44,
+                    ymin = 9.4, ymax = 9.45)+
+  # set the color palette for the pies
+  scale_fill_manual(values = paletteer_c(n = length(fish_columns),
+                                         palette = "ggthemes::Red-Green-Gold Diverging"))+
+  # set the color palette for the habitat types
+  scale_color_manual(values = clr_habitat, guide = FALSE
+                     )+
+  # remove any "extra space" on the x and y axis
+  scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(expand = c(0,0))+
+  # foramt the legend
+  guides(fill = guide_legend(title = 'Family',
+                             title.position = 'top'))+
+  # twaek the plot appearance
+  theme_minimal() +
+  theme(axis.title = element_blank(),
+        legend.key.size = unit(14,'pt'),
+        legend.key.height = unit(14,'pt'),
+        legend.background = element_rect(fill = 'lightgray', 
+                                         color = rgb(1,1,1,0)),
+        legend.position = 'bottom')) + 
+  draw_label("tutorial version", color = "#FF000055", size = 60, angle = 45)
+```
+
+```{r, eval = FALSE}
 summary_by_family %>%
   pivot_longer(cols = Acanthuridae:Urotrygonidae,
                names_to = 'Family', values_to = 'n') %>%
@@ -281,3 +338,23 @@ summary_by_family %>%
         legend.position = 'bottom')
 ```
 
+```{r, echo = FALSE, fig.width = 10.5, fig.height = 10.5}
+ggdraw(summary_by_family %>%
+  pivot_longer(cols = Acanthuridae:Urotrygonidae,
+               names_to = 'Family', values_to = 'n') %>%
+  ggplot(aes(y = fct_reorder(Family, n), x = n, fill = Family))+
+  geom_barh(stat = 'identity')+
+  facet_grid(habitat_type ~ Site)+
+  scale_fill_manual(values = paletteer_c(n = length(fish_columns),
+                                         palette = "ggthemes::Red-Green-Gold Diverging"))+
+  guides(fill = guide_legend(title = 'Family',
+                             title.position = 'top',nrow = 3))+
+  theme_minimal() +
+  theme(axis.title = element_blank(),
+        legend.key.size = unit(14,'pt'),
+        legend.key.height = unit(14,'pt'),
+        legend.background = element_rect(fill = 'lightgray', 
+                                         color = rgb(1,1,1,0)),
+        legend.position = 'bottom')) + 
+  draw_label("tutorial version", color = "#FF000055", size = 60, angle = 45)
+```

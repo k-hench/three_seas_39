@@ -5,6 +5,10 @@ editor_options:
 ---
 # nMDS and Permanova
 
+```{r, include = FALSE}
+library(cowplot)
+```
+
 ## External pacakges
 
 The script starts by loading all needed libraries.
@@ -201,7 +205,7 @@ data_nmds_results <- export_nmds(transects, data_nmds, score_name = 'Transect_id
 
 To look at the results we plot the exported data and color by habitat type:
 
-```{r, fig.width = 10.5, fig.height = 10.5}
+```{r, eval = FALSE}
 p1 <- ggplot(data_nmds_results$spots,
        aes(x = NMDS1, y = NMDS2,
            group = habitat_type)) + 
@@ -229,11 +233,40 @@ p1 <- ggplot(data_nmds_results$spots,
 p1
 ```
 
+```{r, echo = FALSE, fig.width = 10.5, fig.height = 10.5}
+p1 <- ggplot(data_nmds_results$spots,
+       aes(x = NMDS1, y = NMDS2,
+           group = habitat_type)) + 
+  # nMDS needs equal axis
+  coord_equal() +
+  # add lines for x = 0 and y = 0
+  geom_hline(yintercept = 0, color = 'lightgray', alpha = .4) +
+  geom_vline(xintercept = 0, color = 'lightgray', alpha = .4) +
+  # add indication of species influence
+  geom_text(inherit.aes = FALSE,
+            data = data_nmds_results$species,
+            aes(x = NMDS1, y = NMDS2, label = Species)) +
+  # add scoring of the transects
+  geom_point(aes(colour = habitat_type), size = 2) +
+  # add the outer hull for each habitat type
+  geom_encircle(aes(colour = habitat_type, fill = habitat_type), 
+                s_shape = 1, alpha = 0.2, size = 1, expand = 0)+
+  # add a little space on either side of the plot (for text)
+  scale_x_continuous(expand = c(.01,.05))+
+  # adjust plot layout
+  theme(legend.position = 'bottom',
+        panel.grid = element_blank())
+
+# print plot
+ggdraw(p1) + 
+  draw_label("tutorial version", color = "#FF000055", size = 60, angle = 45)
+```
+
 Alternatively we can highlight the differnt sites using color.
 
 Note that all that has changed here is several replacements from `colour = habitat_type` to `colour = Site` - same for `fill =`.
 
-```{r, fig.width = 10.5, fig.height = 10.5}
+```{r, eval = FALSE}
 p2 <- ggplot(data_nmds_results$spots,
        aes(x = NMDS1, y = NMDS2,
            group = Site)) + 
@@ -259,6 +292,35 @@ p2 <- ggplot(data_nmds_results$spots,
 
 # print plot
 p2
+```
+
+```{r, echo = FALSE, fig.width = 10.5, fig.height = 10.5}
+p2 <- ggplot(data_nmds_results$spots,
+       aes(x = NMDS1, y = NMDS2,
+           group = Site)) + 
+  # nMDS needs equal axis
+  coord_equal() +
+  # add lines for x = 0 and y = 0
+  geom_hline(yintercept = 0, color = 'lightgray', alpha = .4) +
+  geom_vline(xintercept = 0, color = 'lightgray', alpha = .4) +
+  # add indication of species influence
+  geom_text(inherit.aes = FALSE,
+            data = data_nmds_results$species,
+            aes(x = NMDS1, y = NMDS2, label = Species)) +
+  # add scoring of the transects
+  geom_point(aes(colour = Site), size = 2) +
+  # add the outer hull for each site
+  geom_encircle(aes(colour = Site, fill = Site),
+                s_shape = 1, alpha = 0.2, size = 1, expand = 0)+
+  # add a little space on either side of the plot (for text)
+  scale_x_continuous(expand = c(.01,.05))+
+  # adjust plot layout
+  theme(legend.position = 'bottom',
+        panel.grid = element_blank())
+
+# print plot
+ggdraw(p2) + 
+  draw_label("tutorial version", color = "#FF000055", size = 60, angle = 45)
 ```
 
 we can export these plots using `ggsave()`.
@@ -311,11 +373,19 @@ Here, we hope for a p-value larger than 0.05, since a value smaller than 0.05 wo
 
 We can also inspect the distances of all transects to the center of their respective cluster visually for the same inforamtion:
 
-```{r}
+```{r, eval = FALSE}
 tibble(distances = distances_betadispersion$distances,
        habitat_type = distances_betadispersion$group) %>%
   ggplot(aes(x = habitat_type, y = distances, fill = habitat_type))+
   geom_boxplot()
+```
+
+```{r, echo = FALSE}
+ggdraw(tibble(distances = distances_betadispersion$distances,
+       habitat_type = distances_betadispersion$group) %>%
+  ggplot(aes(x = habitat_type, y = distances, fill = habitat_type))+
+  geom_boxplot()) + 
+  draw_label("tutorial version", color = "#FF000055", size = 60, angle = 45)
 ```
 
 At the stage when I checked the data it looked like our data is very borderline - actually the clusters for mangrove and reef seem to be of different sizes.

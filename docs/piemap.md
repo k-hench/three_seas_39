@@ -3,7 +3,10 @@ output: html_document
 editor_options:
   chunk_output_type: console
 ---
+
 # pie-charts on map
+
+
 
 Note that we need to drop the following entries unless you know their family:
 
@@ -303,8 +306,7 @@ ggplot()+
         legend.position = 'bottom')
 ```
 
-<img src="piemap_files/figure-html/unnamed-chunk-16-1.png" width="1008" />
-
+<img src="piemap_files/figure-html/unnamed-chunk-18-1.png" width="1008" />
 
 
 ```r
@@ -327,5 +329,4 @@ summary_by_family %>%
         legend.position = 'bottom')
 ```
 
-<img src="piemap_files/figure-html/unnamed-chunk-17-1.png" width="1008" />
-
+<img src="piemap_files/figure-html/unnamed-chunk-20-1.png" width="1008" />
