@@ -214,29 +214,34 @@ data_nmds <- metaMDS(data_matrix, k = 2, trymax = 999, distance='bray')
 ## Square root transformation
 ## Wisconsin double standardization
 ## Run 0 stress 0.2054951 
-## Run 1 stress 0.2054983 
-## ... Procrustes: rmse 0.0006722222  max resid 0.003395532 
+## Run 1 stress 0.2125691 
+## Run 2 stress 0.2110124 
+## Run 3 stress 0.2089351 
+## Run 4 stress 0.2072644 
+## Run 5 stress 0.2089023 
+## Run 6 stress 0.208936 
+## Run 7 stress 0.217789 
+## Run 8 stress 0.2061955 
+## Run 9 stress 0.2168443 
+## Run 10 stress 0.2076921 
+## Run 11 stress 0.2084392 
+## Run 12 stress 0.2244283 
+## Run 13 stress 0.2177622 
+## Run 14 stress 0.2133883 
+## Run 15 stress 0.2115299 
+## Run 16 stress 0.2159872 
+## Run 17 stress 0.2267195 
+## Run 18 stress 0.2111826 
+## Run 19 stress 0.2069518 
+## Run 20 stress 0.2069526 
+## Run 21 stress 0.2228818 
+## Run 22 stress 0.2133022 
+## Run 23 stress 0.2133641 
+## Run 24 stress 0.216247 
+## Run 25 stress 0.2054938 
+## ... New best solution
+## ... Procrustes: rmse 0.0004744987  max resid 0.001909102 
 ## ... Similar to previous best
-## Run 2 stress 0.2124823 
-## Run 3 stress 0.2076941 
-## Run 4 stress 0.2089365 
-## Run 5 stress 0.2110226 
-## Run 6 stress 0.2089032 
-## Run 7 stress 0.2167602 
-## Run 8 stress 0.2056537 
-## ... Procrustes: rmse 0.01053094  max resid 0.05937644 
-## Run 9 stress 0.2084414 
-## Run 10 stress 0.2061962 
-## Run 11 stress 0.2253049 
-## Run 12 stress 0.2061956 
-## Run 13 stress 0.2268553 
-## Run 14 stress 0.2101235 
-## Run 15 stress 0.2244898 
-## Run 16 stress 0.2089349 
-## Run 17 stress 0.2076972 
-## Run 18 stress 0.2076924 
-## Run 19 stress 0.2089023 
-## Run 20 stress 0.208453 
 ## *** Solution reached
 ```
 
@@ -351,7 +356,7 @@ distances_groups <- transects[match(labels(distances),
                                        transects$Transect_id),]$habitat_type
 ```
 
-One point we unfortunately could not discuss in class (because of time 😢), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.
+One point we unfortunately could not discuss in class (because of time 😭), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.
 
 So, before we start, we need to check if the assumptions for permanova are met by our data [@Anderson01]:
 
@@ -382,7 +387,7 @@ permutest(distances_betadispersion)
 ## 
 ## Response: Distances
 ##           Df Sum Sq  Mean Sq      F N.Perm Pr(>F)  
-## Groups     1 0.1401 0.140096 4.0667    999  0.051 .
+## Groups     1 0.1401 0.140096 4.0667    999  0.048 *
 ## Residuals 44 1.5158 0.034449                       
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1

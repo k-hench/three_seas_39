@@ -17,7 +17,7 @@ description: "Community analysis based on transects"
 
 ## Before you start
 
-For the scripts to work, the several R packages need to be installed.
+For the scripts to work, several R packages need to be installed.
 
 For the nMDS and Permanova script you'll need:
 

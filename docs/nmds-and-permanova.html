@@ -321,29 +321,34 @@ To check for this, we create a new column with the sum of all fish for each tran
 <pre><code>## Square root transformation
 ## Wisconsin double standardization
 ## Run 0 stress 0.2054951 
-## Run 1 stress 0.2054983 
-## ... Procrustes: rmse 0.0006722222  max resid 0.003395532 
+## Run 1 stress 0.2125691 
+## Run 2 stress 0.2110124 
+## Run 3 stress 0.2089351 
+## Run 4 stress 0.2072644 
+## Run 5 stress 0.2089023 
+## Run 6 stress 0.208936 
+## Run 7 stress 0.217789 
+## Run 8 stress 0.2061955 
+## Run 9 stress 0.2168443 
+## Run 10 stress 0.2076921 
+## Run 11 stress 0.2084392 
+## Run 12 stress 0.2244283 
+## Run 13 stress 0.2177622 
+## Run 14 stress 0.2133883 
+## Run 15 stress 0.2115299 
+## Run 16 stress 0.2159872 
+## Run 17 stress 0.2267195 
+## Run 18 stress 0.2111826 
+## Run 19 stress 0.2069518 
+## Run 20 stress 0.2069526 
+## Run 21 stress 0.2228818 
+## Run 22 stress 0.2133022 
+## Run 23 stress 0.2133641 
+## Run 24 stress 0.216247 
+## Run 25 stress 0.2054938 
+## ... New best solution
+## ... Procrustes: rmse 0.0004744987  max resid 0.001909102 
 ## ... Similar to previous best
-## Run 2 stress 0.2124823 
-## Run 3 stress 0.2076941 
-## Run 4 stress 0.2089365 
-## Run 5 stress 0.2110226 
-## Run 6 stress 0.2089032 
-## Run 7 stress 0.2167602 
-## Run 8 stress 0.2056537 
-## ... Procrustes: rmse 0.01053094  max resid 0.05937644 
-## Run 9 stress 0.2084414 
-## Run 10 stress 0.2061962 
-## Run 11 stress 0.2253049 
-## Run 12 stress 0.2061956 
-## Run 13 stress 0.2268553 
-## Run 14 stress 0.2101235 
-## Run 15 stress 0.2244898 
-## Run 16 stress 0.2089349 
-## Run 17 stress 0.2076972 
-## Run 18 stress 0.2076924 
-## Run 19 stress 0.2089023 
-## Run 20 stress 0.208453 
 ## *** Solution reached</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># you can also try plot(data_nmds) at this point</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">data_nmds_results &lt;-<span class="st"> </span><span class="kw">export_nmds</span>(transects, data_nmds, <span class="dt">score_name =</span> <span class="st">&#39;Transect_id&#39;</span>)</a></code></pre></div>
@@ -421,7 +426,7 @@ To check for this, we create a new column with the sum of all fish for each tran
 <a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co"># export the hapitat types according to order of the distance matrix</span></a>
 <a class="sourceLine" id="cb22-7" data-line-number="7">distances_groups &lt;-<span class="st"> </span>transects[<span class="kw">match</span>(<span class="kw">labels</span>(distances),</a>
 <a class="sourceLine" id="cb22-8" data-line-number="8">                                       transects<span class="op">$</span>Transect_id),]<span class="op">$</span>habitat_type</a></code></pre></div>
-<p>One point we unfortunately could not discuss in class (because of time 😢), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.</p>
+<p>One point we unfortunately could not discuss in class (because of time 😭), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.</p>
 <p>So, before we start, we need to check if the assumptions for permanova are met by our data <span class="citation">(Anderson <a href="#ref-Anderson01">2001</a>)</span>:</p>
 <center>
 <em>“The only assumption of the test is that […] the observations are independent and that they have similar distributions”</em>
@@ -444,7 +449,7 @@ The idea here is that if the clusters are of differnt sizes, the permanova might
 ## 
 ## Response: Distances
 ##           Df Sum Sq  Mean Sq      F N.Perm Pr(&gt;F)  
-## Groups     1 0.1401 0.140096 4.0667    999  0.051 .
+## Groups     1 0.1401 0.140096 4.0667    999  0.048 *
 ## Residuals 44 1.5158 0.034449                       
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
