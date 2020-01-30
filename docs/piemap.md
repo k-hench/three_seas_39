@@ -8,6 +8,8 @@ editor_options:
 
 
 
+## External pacakges
+
 Note that we need to drop the following entries unless you know their family:
 
 - little_grey_guys
@@ -20,17 +22,22 @@ Also, the following species need to be added to the fish list:
 - bearded_toadfish
 - blue hamlet (unless changed to black hamlet)
 
+The script starts by loading all needed libraries.
 
 
 ```r
 # loading all needed libraries
 # -----------------------------------
 library(tidyverse)
+# for maps
 library(sf)
+# for pies on maps
 library(scatterpie)
+# for colors
 library(paletteer)
-library(ggforce)
+# for scalebar
 library(ggsn)
+# for loading the compass image
 library(hypoimg)
 ```
 
@@ -39,10 +46,20 @@ library(hypoimg)
 ```
 
 ```r
+# for circles around pies
+library(ggforce)
+# to format dates
 library(lubridate)
+# for horizontal barplot
 library(ggstance)
 ```
 
+## Custom functions
+
+To make the code more easily understandable (hopefully), we define some helper functions upfront (as opposed to "in the middle of the process"):
+
+The shapefile that we downloaded from [gdam.org](https://www.gadm.org/download_country_v3.html) contains whole Panama, but we are only going to plot Bocas del Toro.
+Therefore we define a function to crop the shapefile to the extent of the map.
 
 
 ```r
@@ -61,6 +78,7 @@ crp <- function (poly, xlim = xlim_boc, ylim = ylim_boc) {
 }
 ```
 
+To plot the sampling pointswe turn the `data.frame` into a spatial object (strictly this is not necessary since the projection of our map is WGS - the same as GPS uses, but it might be good to know how to do this propperly...).
 
 
 ```r
@@ -73,6 +91,8 @@ tibble_to_sf <- function(tib, crs = 4326){
 }
 ```
 
+At some point we will need to fill the empty celly of our data sheet with zeros - by default R will fill empty cells with `NA`.
+For this we create a function, that will replace `NA` in all columns of a data frame except for a specific subset of columns (the "non-fish" columns).
 
 
 ```r
@@ -92,7 +112,8 @@ replace_all_na <- function(tib, replace = 0, exclude = c("Date", "location", "gr
 
 Now, we are all set up and can start with the actual work.
 
-First, we need to import all the data sheets into R, starting with the survey data.
+First, we need to set the extent of the map and import all the data sheets into R.
+
 
 
 ```r
@@ -105,6 +126,7 @@ xlim_boc <- c(-82.5, -82)
 ylim_boc <- c(9.1, 9.47)
 ```
 
+Next, we import the Panama shapefile and crop it to the map extent.
 
 
 ```r
@@ -115,6 +137,7 @@ bocas <- read_sf('data/PAN_adm0.shp') %>%
   crp()
 ```
 
+Then we load all de diving sites and remove duplicated entries (we only need each position once).
 
 
 ```r
@@ -124,6 +147,17 @@ sites <- read_tsv('data/dive_spots - Sheet1.tsv') %>%
   select(Site, Latitude, Longitude)
 ```
 
+Then, we import the survey data into R.
+
+Directly while importing we deal with some issues:
+
+- we extract the *pure* site name from the `location` column (dropping the `_mangrove` suffix)
+- we proppely format the date (actually transforming the column from `character` into `date`-type)
+- since we have several transects per group, we number the transects within each group
+- from the columns `Site`, `habitat_type`, `group` and `transet_nr_within_group` we create a unique identifier for each transect
+- finally, we use the previously prepared function to replace all empty fish-cells with zeros
+
+<p style='color:#f0a830'>Beware of the `col_types = str_c(c('ccdc',rep('d', 78)),collapse = '')` part: here we define the column types (c = character, d = "double"/number). So I the original google sheet changes (eg. by a merge og "blue hamlet" and "black hamlet") the `78` needs to be updated to *the total number of columns* - 4!</p>
 
 
 ```r
@@ -140,14 +174,18 @@ transects <- read_tsv('data/Fish_surveys - Sheet1.tsv',
   left_join(sites)
 ```
 
+We create a copy of the survey data, extract each sampling point once, and turn dete data set into spatial objects (the sampling spots of the transects). 
 
 
 ```r
 # create a spatial object from the transects
 transects_sf <- transects %>%
+  filter(!(duplicated(Site))) %>%
+  select(Site:Longitude) %>%
   tibble_to_sf()
 ```
 
+Then we import the fish list to be able to add familiy names to the transect data.
 
 
 ```r
@@ -176,6 +214,7 @@ fish_list <- read_tsv('data/Fish_list_2020 - Sheet1.tsv') %>%
 ## )
 ```
 
+We are going to plot two pies per sampling spot (one per habitat type), so here we define the offset width between them (which will also determine the pie size).
 
 
 ```r
@@ -184,6 +223,13 @@ fish_list <- read_tsv('data/Fish_list_2020 - Sheet1.tsv') %>%
 pie_shift <- .03
 ```
 
+## Merge and summarize data
+
+Now is the time to merge the trasect data and the fish list.
+
+To do this merging (again) we are going to apply some tidyverse-magic (using functions from the packages [tidyr](https://tidyr.tidyverse.org/) and [dplyr](https://dplyr.tidyverse.org/)).
+
+If you have difficulties following these rather complex steps, it might be helpful to highlight and execute just parts of the code (to see what is going on you will allways need to start with `transects %>%` (s. explanation of nmds).
 
 
 ```r
@@ -228,6 +274,7 @@ summary_by_family <- transects %>%
 ## Joining, by = "fish_id"
 ```
 
+Since we are going to need this inforamtion several times downstream, we are extracting the names of all families within the transects.
 
 
 ```r
@@ -237,6 +284,7 @@ fish_columns <- names(summary_by_family)[!(names(summary_by_family) %in%
                                                "Longitude", "grp"))]
 ```
 
+Now, we set te color scheme for the habitat type (for the circles around the pies).
 
 
 ```r
@@ -245,12 +293,15 @@ clr_habitat <- c(rgb(0,0,0), rgb(1,1,1)) %>%
   set_names(nm = c('Reef', 'Mangrove'))
 ```
 
+To put the compass on the map we read the svg file into R.
 
 
 ```r
 # import the compass image
 compass <- hypo_read_svg('north.svg')
 ```
+
+## Plotting
 
 
 
@@ -307,6 +358,8 @@ ggplot()+
 ```
 
 <img src="piemap_files/figure-html/unnamed-chunk-18-1.png" width="1008" />
+
+## Horizontal bar plots
 
 
 ```r

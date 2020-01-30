@@ -24,7 +24,7 @@ library(lubridate)
 
 ## Custom functions
 
-To make the code mode easily understandable (hopefully), we define some helper functions upfront (as opposed to "in the middle of the process"):
+To make the code more easily understandable (hopefully), we define some helper functions upfront (as opposed to "in the middle of the process"):
 
 At some point we will need to fill the empty celly of our data sheet with zeros - by default R will fill empty cells with `NA`.
 For this we create a function, that will replace `NA` in all columns of a data frame except for a specific subset of columns (the "non-fish" columns).
@@ -216,244 +216,29 @@ data_nmds <- metaMDS(data_matrix, k = 2, trymax = 999, distance='bray')
 ## Square root transformation
 ## Wisconsin double standardization
 ## Run 0 stress 0.2054951 
-## Run 1 stress 0.2073328 
-## Run 2 stress 0.2110472 
-## Run 3 stress 0.2089344 
-## Run 4 stress 0.2112255 
-## Run 5 stress 0.2072524 
-## Run 6 stress 0.2076932 
-## Run 7 stress 0.2061955 
-## Run 8 stress 0.2277037 
-## Run 9 stress 0.2251799 
-## Run 10 stress 0.2120436 
+## Run 1 stress 0.2253043 
+## Run 2 stress 0.2089338 
+## Run 3 stress 0.2089028 
+## Run 4 stress 0.2089353 
+## Run 5 stress 0.2089027 
+## Run 6 stress 0.2076919 
+## Run 7 stress 0.2089347 
+## Run 8 stress 0.2125663 
+## Run 9 stress 0.2159829 
+## Run 10 stress 0.2108573 
 ## Run 11 stress 0.2061956 
-## Run 12 stress 0.2158478 
-## Run 13 stress 0.2061961 
-## Run 14 stress 0.2232418 
-## Run 15 stress 0.2089348 
-## Run 16 stress 0.212634 
-## Run 17 stress 0.2100794 
-## Run 18 stress 0.229484 
-## Run 19 stress 0.2061973 
-## Run 20 stress 0.2226701 
-## Run 21 stress 0.2269043 
-## Run 22 stress 0.208934 
-## Run 23 stress 0.2112546 
-## Run 24 stress 0.2089026 
-## Run 25 stress 0.2084581 
-## Run 26 stress 0.2229818 
-## Run 27 stress 0.2101229 
-## Run 28 stress 0.225972 
-## Run 29 stress 0.2114888 
-## Run 30 stress 0.2158514 
-## Run 31 stress 0.2115015 
-## Run 32 stress 0.2102373 
-## Run 33 stress 0.2061962 
-## Run 34 stress 0.2084403 
-## Run 35 stress 0.2084372 
-## Run 36 stress 0.210387 
-## Run 37 stress 0.2089371 
-## Run 38 stress 0.2084382 
-## Run 39 stress 0.2056559 
-## ... Procrustes: rmse 0.01064424  max resid 0.05805437 
-## Run 40 stress 0.2072531 
-## Run 41 stress 0.2230131 
-## Run 42 stress 0.2089486 
-## Run 43 stress 0.2226318 
-## Run 44 stress 0.2124895 
-## Run 45 stress 0.2084525 
-## Run 46 stress 0.2185491 
-## Run 47 stress 0.212617 
-## Run 48 stress 0.2116721 
-## Run 49 stress 0.2099511 
-## Run 50 stress 0.2310483 
-## Run 51 stress 0.2125223 
-## Run 52 stress 0.2112245 
-## Run 53 stress 0.2084565 
-## Run 54 stress 0.2061955 
-## Run 55 stress 0.2112547 
-## Run 56 stress 0.2109999 
-## Run 57 stress 0.2126238 
-## Run 58 stress 0.2069518 
-## Run 59 stress 0.2124165 
-## Run 60 stress 0.2101305 
-## Run 61 stress 0.2134171 
-## Run 62 stress 0.2056535 
-## ... Procrustes: rmse 0.01052152  max resid 0.0585433 
-## Run 63 stress 0.2073191 
-## Run 64 stress 0.2076925 
-## Run 65 stress 0.2182903 
-## Run 66 stress 0.2159858 
-## Run 67 stress 0.2061957 
-## Run 68 stress 0.2104501 
-## Run 69 stress 0.2123883 
-## Run 70 stress 0.223215 
-## Run 71 stress 0.2089352 
-## Run 72 stress 0.2137481 
-## Run 73 stress 0.2061977 
-## Run 74 stress 0.2056535 
-## ... Procrustes: rmse 0.01055998  max resid 0.05926682 
-## Run 75 stress 0.2084524 
-## Run 76 stress 0.2114861 
-## Run 77 stress 0.2061957 
-## Run 78 stress 0.2089639 
-## Run 79 stress 0.2069527 
-## Run 80 stress 0.206213 
-## Run 81 stress 0.2110489 
-## Run 82 stress 0.2089347 
-## Run 83 stress 0.2123777 
-## Run 84 stress 0.2103604 
-## Run 85 stress 0.2126263 
-## Run 86 stress 0.2123735 
-## Run 87 stress 0.2123798 
-## Run 88 stress 0.2056549 
-## ... Procrustes: rmse 0.01064887  max resid 0.06014341 
-## Run 89 stress 0.2056536 
-## ... Procrustes: rmse 0.01056363  max resid 0.0588167 
-## Run 90 stress 0.2084382 
-## Run 91 stress 0.2089348 
-## Run 92 stress 0.2104627 
-## Run 93 stress 0.2159874 
-## Run 94 stress 0.2061963 
-## Run 95 stress 0.2110054 
-## Run 96 stress 0.2105451 
-## Run 97 stress 0.2343238 
-## Run 98 stress 0.215314 
-## Run 99 stress 0.2250141 
-## Run 100 stress 0.2112248 
-## Run 101 stress 0.2250305 
-## Run 102 stress 0.2076914 
-## Run 103 stress 0.2089026 
-## Run 104 stress 0.206952 
-## Run 105 stress 0.2160433 
-## Run 106 stress 0.2110327 
-## Run 107 stress 0.2089351 
-## Run 108 stress 0.2061959 
-## Run 109 stress 0.2310673 
-## Run 110 stress 0.2100788 
-## Run 111 stress 0.2061956 
-## Run 112 stress 0.2167566 
-## Run 113 stress 0.206197 
-## Run 114 stress 0.2152961 
-## Run 115 stress 0.2171266 
-## Run 116 stress 0.206196 
-## Run 117 stress 0.2143276 
-## Run 118 stress 0.2159875 
-## Run 119 stress 0.2153079 
-## Run 120 stress 0.211664 
-## Run 121 stress 0.2061955 
-## Run 122 stress 0.2111632 
-## Run 123 stress 0.2228563 
-## Run 124 stress 0.2061956 
-## Run 125 stress 0.2234943 
-## Run 126 stress 0.2076915 
-## Run 127 stress 0.2079455 
-## Run 128 stress 0.2260427 
-## Run 129 stress 0.2108587 
-## Run 130 stress 0.2247557 
-## Run 131 stress 0.2260429 
-## Run 132 stress 0.2224012 
-## Run 133 stress 0.2125277 
-## Run 134 stress 0.2123009 
-## Run 135 stress 0.2072541 
-## Run 136 stress 0.2107816 
-## Run 137 stress 0.2269081 
-## Run 138 stress 0.2267632 
-## Run 139 stress 0.2238753 
-## Run 140 stress 0.2089608 
-## Run 141 stress 0.2101249 
-## Run 142 stress 0.2110071 
-## Run 143 stress 0.2062129 
-## Run 144 stress 0.2271357 
-## Run 145 stress 0.2089359 
-## Run 146 stress 0.2061963 
-## Run 147 stress 0.2072647 
-## Run 148 stress 0.2167583 
-## Run 149 stress 0.208935 
-## Run 150 stress 0.2161062 
-## Run 151 stress 0.20566 
-## ... Procrustes: rmse 0.005987957  max resid 0.02943882 
-## Run 152 stress 0.2089053 
-## Run 153 stress 0.2100831 
-## Run 154 stress 0.2163064 
-## Run 155 stress 0.2076934 
-## Run 156 stress 0.2076075 
-## Run 157 stress 0.2111609 
-## Run 158 stress 0.2110051 
-## Run 159 stress 0.206196 
-## Run 160 stress 0.2115747 
-## Run 161 stress 0.2114879 
-## Run 162 stress 0.2108576 
-## Run 163 stress 0.2272283 
-## Run 164 stress 0.2061958 
-## Run 165 stress 0.2281372 
-## Run 166 stress 0.2112237 
-## Run 167 stress 0.2124408 
-## Run 168 stress 0.2084526 
-## Run 169 stress 0.2137899 
-## Run 170 stress 0.2061963 
-## Run 171 stress 0.2056566 
-## ... Procrustes: rmse 0.0105751  max resid 0.06038153 
-## Run 172 stress 0.2056534 
-## ... Procrustes: rmse 0.01054811  max resid 0.05924621 
-## Run 173 stress 0.2105566 
-## Run 174 stress 0.2101229 
-## Run 175 stress 0.2084381 
-## Run 176 stress 0.2128589 
-## Run 177 stress 0.2076207 
-## Run 178 stress 0.2121746 
-## Run 179 stress 0.2061955 
-## Run 180 stress 0.2160432 
-## Run 181 stress 0.223066 
-## Run 182 stress 0.2056537 
-## ... Procrustes: rmse 0.01058809  max resid 0.05958554 
-## Run 183 stress 0.222882 
-## Run 184 stress 0.2084391 
-## Run 185 stress 0.2265079 
-## Run 186 stress 0.2132956 
-## Run 187 stress 0.2185497 
-## Run 188 stress 0.2105417 
-## Run 189 stress 0.2133624 
-## Run 190 stress 0.2124931 
-## Run 191 stress 0.2123818 
-## Run 192 stress 0.2226805 
-## Run 193 stress 0.2061958 
-## Run 194 stress 0.2115045 
-## Run 195 stress 0.206196 
-## Run 196 stress 0.2062142 
-## Run 197 stress 0.2089391 
-## Run 198 stress 0.2281036 
-## Run 199 stress 0.2162323 
-## Run 200 stress 0.2123821 
-## Run 201 stress 0.2155047 
-## Run 202 stress 0.2089485 
-## Run 203 stress 0.2076913 
-## Run 204 stress 0.2089355 
-## Run 205 stress 0.2109996 
-## Run 206 stress 0.2084579 
-## Run 207 stress 0.2111613 
-## Run 208 stress 0.2112233 
-## Run 209 stress 0.2089345 
-## Run 210 stress 0.212189 
-## Run 211 stress 0.2177879 
-## Run 212 stress 0.2295741 
-## Run 213 stress 0.2061992 
-## Run 214 stress 0.2247632 
-## Run 215 stress 0.2260427 
-## Run 216 stress 0.2250272 
-## Run 217 stress 0.2267634 
-## Run 218 stress 0.2115603 
-## Run 219 stress 0.2125271 
-## Run 220 stress 0.2123807 
-## Run 221 stress 0.211908 
-## Run 222 stress 0.2105442 
-## Run 223 stress 0.2123835 
-## Run 224 stress 0.2115023 
-## Run 225 stress 0.2264694 
-## Run 226 stress 0.2054933 
-## ... New best solution
-## ... Procrustes: rmse 0.001084309  max resid 0.004229843 
+## Run 12 stress 0.211021 
+## Run 13 stress 0.2269092 
+## Run 14 stress 0.2061966 
+## Run 15 stress 0.2110134 
+## Run 16 stress 0.2061956 
+## Run 17 stress 0.2072502 
+## Run 18 stress 0.2054957 
+## ... Procrustes: rmse 0.0005305925  max resid 0.002908024 
 ## ... Similar to previous best
+## Run 19 stress 0.2056555 
+## ... Procrustes: rmse 0.01062894  max resid 0.05814338 
+## Run 20 stress 0.2105413 
 ## *** Solution reached
 ```
 
@@ -570,7 +355,7 @@ distances_groups <- transects[match(labels(distances),
                                        transects$Transect_id),]$habitat_type
 ```
 
-One point we unfortunately could not discuss in class (because of time 😿), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.
+One point we unfortunately could not discuss in class (because of time 😞), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.
 
 So, before we start, we need to check if the assumptions for permanova are met by our data [@Anderson01]:
 
@@ -601,7 +386,7 @@ permutest(distances_betadispersion)
 ## 
 ## Response: Distances
 ##           Df Sum Sq  Mean Sq      F N.Perm Pr(>F)  
-## Groups     1 0.1401 0.140096 4.0667    999  0.045 *
+## Groups     1 0.1401 0.140096 4.0667    999  0.043 *
 ## Residuals 44 1.5158 0.034449                       
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1

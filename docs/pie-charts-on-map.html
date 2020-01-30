@@ -24,7 +24,7 @@
 <meta name="author" content="Kosmas Hench" />
 
 
-<meta name="date" content="2020-01-28" />
+<meta name="date" content="2020-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="nmds-and-permanova.html"><a href="nmds-and-permanova.html#permanova"><i class="fa fa-check"></i><b>2.5</b> Permanova</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html"><i class="fa fa-check"></i><b>3</b> pie-charts on map</a><ul>
-<li class="chapter" data-level="3.1" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#loading-data-1"><i class="fa fa-check"></i><b>3.1</b> Loading data</a></li>
+<li class="chapter" data-level="3.1" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#external-pacakges-1"><i class="fa fa-check"></i><b>3.1</b> External pacakges</a></li>
+<li class="chapter" data-level="3.2" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#custom-functions-1"><i class="fa fa-check"></i><b>3.2</b> Custom functions</a></li>
+<li class="chapter" data-level="3.3" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#loading-data-1"><i class="fa fa-check"></i><b>3.3</b> Loading data</a></li>
+<li class="chapter" data-level="3.4" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#merge-and-summarize-data"><i class="fa fa-check"></i><b>3.4</b> Merge and summarize data</a></li>
+<li class="chapter" data-level="3.5" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#plotting"><i class="fa fa-check"></i><b>3.5</b> Plotting</a></li>
+<li class="chapter" data-level="3.6" data-path="pie-charts-on-map.html"><a href="pie-charts-on-map.html#horizontal-bar-plots"><i class="fa fa-check"></i><b>3.6</b> Horizontal bar plots</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -168,6 +173,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="pie-charts-on-map" class="section level1">
 <h1><span class="header-section-number">3</span> pie-charts on map</h1>
+<div id="external-pacakges-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> External pacakges</h2>
 <p>Note that we need to drop the following entries unless you know their family:</p>
 <ul>
 <li>little_grey_guys</li>
@@ -180,18 +187,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>bearded_toadfish</li>
 <li>blue hamlet (unless changed to black hamlet)</li>
 </ul>
+<p>The script starts by loading all needed libraries.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># loading all needed libraries</span></a>
 <a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co"># -----------------------------------</span></a>
 <a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw">library</span>(sf)</a>
-<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="kw">library</span>(scatterpie)</a>
-<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="kw">library</span>(paletteer)</a>
-<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="kw">library</span>(ggforce)</a>
-<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="kw">library</span>(ggsn)</a>
-<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="kw">library</span>(hypoimg)</a></code></pre></div>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co"># for maps</span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="kw">library</span>(sf)</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="co"># for pies on maps</span></a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="kw">library</span>(scatterpie)</a>
+<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="co"># for colors</span></a>
+<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="kw">library</span>(paletteer)</a>
+<a class="sourceLine" id="cb30-10" data-line-number="10"><span class="co"># for scalebar</span></a>
+<a class="sourceLine" id="cb30-11" data-line-number="11"><span class="kw">library</span>(ggsn)</a>
+<a class="sourceLine" id="cb30-12" data-line-number="12"><span class="co"># for loading the compass image</span></a>
+<a class="sourceLine" id="cb30-13" data-line-number="13"><span class="kw">library</span>(hypoimg)</a></code></pre></div>
 <pre><code>## --- Welcome to hypoimg ---</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw">library</span>(ggstance)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># for circles around pies</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw">library</span>(ggforce)</a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co"># to format dates</span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="co"># for horizontal barplot</span></a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="kw">library</span>(ggstance)</a></code></pre></div>
+</div>
+<div id="custom-functions-1" class="section level2">
+<h2><span class="header-section-number">3.2</span> Custom functions</h2>
+<p>To make the code more easily understandable (hopefully), we define some helper functions upfront (as opposed to “in the middle of the process”):</p>
+<p>The shapefile that we downloaded from <a href="https://www.gadm.org/download_country_v3.html">gdam.org</a> contains whole Panama, but we are only going to plot Bocas del Toro.
+Therefore we define a function to crop the shapefile to the extent of the map.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># setting up custom functions</span></a>
 <a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co"># -----------------------------------</span></a>
 <a class="sourceLine" id="cb33-3" data-line-number="3"></a>
@@ -205,6 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb33-11" data-line-number="11">                                         <span class="st">&quot;SpatialPolygons&quot;</span>)),</a>
 <a class="sourceLine" id="cb33-12" data-line-number="12">                             <span class="kw">st_crs</span>(poly)))</a>
 <a class="sourceLine" id="cb33-13" data-line-number="13">}</a></code></pre></div>
+<p>To plot the sampling pointswe turn the <code>data.frame</code> into a spatial object (strictly this is not necessary since the projection of our map is WGS - the same as GPS uses, but it might be good to know how to do this propperly…).</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># function to turn a data.frame (with the columns</span></a>
 <a class="sourceLine" id="cb34-2" data-line-number="2"><span class="co"># &quot;Longitude&quot; and &quot;Latitude&quot;) into a spatial object</span></a>
 <a class="sourceLine" id="cb34-3" data-line-number="3">tibble_to_sf &lt;-<span class="st"> </span><span class="cf">function</span>(tib, <span class="dt">crs =</span> <span class="dv">4326</span>){</a>
@@ -212,6 +235,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb34-5" data-line-number="5"><span class="st">    </span><span class="kw">st_as_sf</span>(., <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;Longitude&quot;</span>,<span class="st">&quot;Latitude&quot;</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb34-6" data-line-number="6"><span class="st">    </span><span class="kw">st_set_crs</span>(., crs)</a>
 <a class="sourceLine" id="cb34-7" data-line-number="7">}</a></code></pre></div>
+<p>At some point we will need to fill the empty celly of our data sheet with zeros - by default R will fill empty cells with <code>NA</code>.
+For this we create a function, that will replace <code>NA</code> in all columns of a data frame except for a specific subset of columns (the “non-fish” columns).</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co"># funtion to fill empty cells (NA) with zeros </span></a>
 <a class="sourceLine" id="cb35-2" data-line-number="2">replace_all_na &lt;-<span class="st"> </span><span class="cf">function</span>(tib, <span class="dt">replace =</span> <span class="dv">0</span>, <span class="dt">exclude =</span> <span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>, <span class="st">&quot;location&quot;</span>, <span class="st">&quot;group&quot;</span>,</a>
 <a class="sourceLine" id="cb35-3" data-line-number="3">                                                         <span class="st">&quot;habitat_type&quot;</span>, <span class="st">&quot;depth&quot;</span>)){</a>
@@ -222,10 +247,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb35-8" data-line-number="8">  </a>
 <a class="sourceLine" id="cb35-9" data-line-number="9">  tib <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">replace_na</span>(<span class="dt">replace =</span> replace_list)</a>
 <a class="sourceLine" id="cb35-10" data-line-number="10">}</a></code></pre></div>
+</div>
 <div id="loading-data-1" class="section level2">
-<h2><span class="header-section-number">3.1</span> Loading data</h2>
+<h2><span class="header-section-number">3.3</span> Loading data</h2>
 <p>Now, we are all set up and can start with the actual work.</p>
-<p>First, we need to import all the data sheets into R, starting with the survey data.</p>
+<p>First, we need to set the extent of the map and import all the data sheets into R.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># -----------------------------------</span></a>
 <a class="sourceLine" id="cb36-2" data-line-number="2"><span class="co"># the actual script</span></a>
 <a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co"># -----------------------------------</span></a>
@@ -233,15 +259,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co"># setting the extent of the map</span></a>
 <a class="sourceLine" id="cb36-6" data-line-number="6">xlim_boc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">82.5</span>, <span class="dv">-82</span>)</a>
 <a class="sourceLine" id="cb36-7" data-line-number="7">ylim_boc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">9.1</span>, <span class="fl">9.47</span>)</a></code></pre></div>
+<p>Next, we import the Panama shapefile and crop it to the map extent.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># reading the panama shape files and</span></a>
 <a class="sourceLine" id="cb37-2" data-line-number="2"><span class="co"># cropping it to the plot extent</span></a>
 <a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co"># (downloaded from https://www.gadm.org/download_country_v3.html)</span></a>
 <a class="sourceLine" id="cb37-4" data-line-number="4">bocas &lt;-<span class="st"> </span><span class="kw">read_sf</span>(<span class="st">&#39;data/PAN_adm0.shp&#39;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb37-5" data-line-number="5"><span class="st">  </span><span class="kw">crp</span>()</a></code></pre></div>
+<p>Then we load all de diving sites and remove duplicated entries (we only need each position once).</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># reading in the dive sites for the gps locations</span></a>
 <a class="sourceLine" id="cb38-2" data-line-number="2">sites &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/dive_spots - Sheet1.tsv&#39;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb38-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(Site)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb38-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(Site, Latitude, Longitude)</a></code></pre></div>
+<p>Then, we import the survey data into R.</p>
+<p>Directly while importing we deal with some issues:</p>
+<ul>
+<li>we extract the <em>pure</em> site name from the <code>location</code> column (dropping the <code>_mangrove</code> suffix)</li>
+<li>we proppely format the date (actually transforming the column from <code>character</code> into <code>date</code>-type)</li>
+<li>since we have several transects per group, we number the transects within each group</li>
+<li>from the columns <code>Site</code>, <code>habitat_type</code>, <code>group</code> and <code>transet_nr_within_group</code> we create a unique identifier for each transect</li>
+<li>finally, we use the previously prepared function to replace all empty fish-cells with zeros</li>
+</ul>
+<p style="color:#f0a830">
+Beware of the <code>col_types = str_c(c('ccdc',rep('d', 78)),collapse = '')</code> part: here we define the column types (c = character, d = “double”/number). So I the original google sheet changes (eg. by a merge og “blue hamlet” and “black hamlet”) the <code>78</code> needs to be updated to <em>the total number of columns</em> - 4!
+</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># reading in the transect data, replacing NAs with zeros</span></a>
 <a class="sourceLine" id="cb39-2" data-line-number="2"><span class="co"># and merge with gps positions</span></a>
 <a class="sourceLine" id="cb39-3" data-line-number="3">transects &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/Fish_surveys - Sheet1.tsv&#39;</span>,</a>
@@ -253,9 +293,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb39-9" data-line-number="9"><span class="st">           </span><span class="kw">as_date</span>(Date)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb39-10" data-line-number="10"><span class="st">  </span><span class="kw">replace_all_na</span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb39-11" data-line-number="11"><span class="st">  </span><span class="kw">left_join</span>(sites)</a></code></pre></div>
+<p>We create a copy of the survey data, extract each sampling point once, and turn dete data set into spatial objects (the sampling spots of the transects).</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co"># create a spatial object from the transects</span></a>
 <a class="sourceLine" id="cb40-2" data-line-number="2">transects_sf &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">tibble_to_sf</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>(<span class="kw">duplicated</span>(Site))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(Site<span class="op">:</span>Longitude) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="st">  </span><span class="kw">tibble_to_sf</span>()</a></code></pre></div>
+<p>Then we import the fish list to be able to add familiy names to the transect data.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># reading in the fish list for the fish families and create an ID column</span></a>
 <a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co"># for merging with the transect data</span></a>
 <a class="sourceLine" id="cb41-3" data-line-number="3">fish_list &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&#39;data/Fish_list_2020 - Sheet1.tsv&#39;</span>) <span class="op">%&gt;%</span></a>
@@ -276,9 +320,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Observer = col_character(),
 ##   Checked = col_character()
 ## )</code></pre>
+<p>We are going to plot two pies per sampling spot (one per habitat type), so here we define the offset width between them (which will also determine the pie size).</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># pie shift is set to define the distance between</span></a>
 <a class="sourceLine" id="cb43-2" data-line-number="2"><span class="co"># the &quot;mangrove&quot; and &quot;reef&quot; pie for each location </span></a>
 <a class="sourceLine" id="cb43-3" data-line-number="3">pie_shift &lt;-<span class="st"> </span><span class="fl">.03</span></a></code></pre></div>
+</div>
+<div id="merge-and-summarize-data" class="section level2">
+<h2><span class="header-section-number">3.4</span> Merge and summarize data</h2>
+<p>Now is the time to merge the trasect data and the fish list.</p>
+<p>To do this merging (again) we are going to apply some tidyverse-magic (using functions from the packages <a href="https://tidyr.tidyverse.org/">tidyr</a> and <a href="https://dplyr.tidyverse.org/">dplyr</a>).</p>
+<p>If you have difficulties following these rather complex steps, it might be helpful to highlight and execute just parts of the code (to see what is going on you will allways need to start with <code>transects %&gt;%</code> (s. explanation of nmds).</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="co"># merge transect data and fish list</span></a>
 <a class="sourceLine" id="cb44-2" data-line-number="2">summary_by_family &lt;-<span class="st"> </span>transects <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="co"># we need unique identifiers for each transect,</span></a>
@@ -315,15 +366,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb44-34" data-line-number="34">         <span class="dt">Longitude =</span> <span class="kw">ifelse</span>(habitat_type <span class="op">==</span><span class="st"> &#39;Reef&#39;</span>, Longitude <span class="op">-</span><span class="st"> </span><span class="fl">.5</span> <span class="op">*</span><span class="st"> </span>pie_shift, Longitude <span class="op">+</span><span class="st"> </span><span class="fl">.5</span> <span class="op">*</span><span class="st"> </span>pie_shift),</a>
 <a class="sourceLine" id="cb44-35" data-line-number="35">         <span class="dt">Latitude =</span> <span class="kw">ifelse</span>(habitat_type <span class="op">==</span><span class="st"> &#39;Reef&#39;</span>, Latitude <span class="op">-</span><span class="st"> </span><span class="fl">.5</span> <span class="op">*</span><span class="st"> </span>pie_shift, Latitude <span class="op">+</span><span class="st">  </span><span class="fl">.5</span> <span class="op">*</span>pie_shift))</a></code></pre></div>
 <pre><code>## Joining, by = &quot;fish_id&quot;</code></pre>
+<p>Since we are going to need this inforamtion several times downstream, we are extracting the names of all families within the transects.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co"># select the names of all present fish families</span></a>
 <a class="sourceLine" id="cb46-2" data-line-number="2">fish_columns &lt;-<span class="st"> </span><span class="kw">names</span>(summary_by_family)[<span class="op">!</span>(<span class="kw">names</span>(summary_by_family) <span class="op">%in%</span></a>
 <a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">                                             </span><span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>, <span class="st">&quot;Site&quot;</span>, <span class="st">&quot;habitat_type&quot;</span>, <span class="st">&quot;Latitude&quot;</span>,</a>
 <a class="sourceLine" id="cb46-4" data-line-number="4">                                               <span class="st">&quot;Longitude&quot;</span>, <span class="st">&quot;grp&quot;</span>))]</a></code></pre></div>
+<p>Now, we set te color scheme for the habitat type (for the circles around the pies).</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co"># set color coding for habitat type</span></a>
 <a class="sourceLine" id="cb47-2" data-line-number="2">clr_habitat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb47-3" data-line-number="3"><span class="st">  </span><span class="kw">set_names</span>(<span class="dt">nm =</span> <span class="kw">c</span>(<span class="st">&#39;Reef&#39;</span>, <span class="st">&#39;Mangrove&#39;</span>))</a></code></pre></div>
+<p>To put the compass on the map we read the svg file into R.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co"># import the compass image</span></a>
 <a class="sourceLine" id="cb48-2" data-line-number="2">compass &lt;-<span class="st"> </span><span class="kw">hypo_read_svg</span>(<span class="st">&#39;north.svg&#39;</span>)</a></code></pre></div>
+</div>
+<div id="plotting" class="section level2">
+<h2><span class="header-section-number">3.5</span> Plotting</h2>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># -----------------------------------</span></a>
 <a class="sourceLine" id="cb49-2" data-line-number="2"><span class="co"># plotting the map</span></a>
 <a class="sourceLine" id="cb49-3" data-line-number="3"><span class="co"># -----------------------------------</span></a>
@@ -374,6 +431,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb49-48" data-line-number="48">                                         <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)),</a>
 <a class="sourceLine" id="cb49-49" data-line-number="49">        <span class="dt">legend.position =</span> <span class="st">&#39;bottom&#39;</span>)</a></code></pre></div>
 <p><img src="piemap_files/figure-html/unnamed-chunk-18-1.png" width="1008" /></p>
+</div>
+<div id="horizontal-bar-plots" class="section level2">
+<h2><span class="header-section-number">3.6</span> Horizontal bar plots</h2>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">summary_by_family <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> Acanthuridae<span class="op">:</span>Urotrygonidae,</a>
 <a class="sourceLine" id="cb50-3" data-line-number="3">               <span class="dt">names_to =</span> <span class="st">&#39;Family&#39;</span>, <span class="dt">values_to =</span> <span class="st">&#39;n&#39;</span>) <span class="op">%&gt;%</span></a>

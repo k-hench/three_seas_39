@@ -2,7 +2,7 @@
 title: "Three Seas 39 data analysis"
 subtitle: ""
 author: "Kosmas Hench"
-date: "2020-01-28"
+date: "2020-01-29"
 documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike

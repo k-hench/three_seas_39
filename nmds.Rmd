@@ -25,7 +25,7 @@ library(lubridate)
 
 ## Custom functions
 
-To make the code mode easily understandable (hopefully), we define some helper functions upfront (as opposed to "in the middle of the process"):
+To make the code more easily understandable (hopefully), we define some helper functions upfront (as opposed to "in the middle of the process"):
 
 At some point we will need to fill the empty celly of our data sheet with zeros - by default R will fill empty cells with `NA`.
 For this we create a function, that will replace `NA` in all columns of a data frame except for a specific subset of columns (the "non-fish" columns).
