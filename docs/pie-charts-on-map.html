@@ -24,7 +24,7 @@
 <meta name="author" content="Kosmas Hench" />
 
 
-<meta name="date" content="2020-01-29" />
+<meta name="date" content="2020-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -175,7 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">3</span> pie-charts on map</h1>
 <div id="external-pacakges-1" class="section level2">
 <h2><span class="header-section-number">3.1</span> External pacakges</h2>
-<p>Note that we need to drop the following entries unless you know their family:</p>
+<p>Note that we need to drop the following entries unless you know their family (this happens automatically within this script):</p>
 <ul>
 <li>little_grey_guys</li>
 <li>little_guys_green</li>
@@ -375,12 +375,13 @@ Beware of the <code>col_types = str_c(c('ccdc',rep('d', 78)),collapse = '')</cod
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co"># set color coding for habitat type</span></a>
 <a class="sourceLine" id="cb47-2" data-line-number="2">clr_habitat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb47-3" data-line-number="3"><span class="st">  </span><span class="kw">set_names</span>(<span class="dt">nm =</span> <span class="kw">c</span>(<span class="st">&#39;Reef&#39;</span>, <span class="st">&#39;Mangrove&#39;</span>))</a></code></pre></div>
-<p>To put the compass on the map we read the svg file into R.</p>
+<p>To put the compass on the map, we read the svg file into R.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co"># import the compass image</span></a>
 <a class="sourceLine" id="cb48-2" data-line-number="2">compass &lt;-<span class="st"> </span><span class="kw">hypo_read_svg</span>(<span class="st">&#39;north.svg&#39;</span>)</a></code></pre></div>
 </div>
 <div id="plotting" class="section level2">
 <h2><span class="header-section-number">3.5</span> Plotting</h2>
+<p>Now we have all the pieces needed to plot the pies on the bocas map.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># -----------------------------------</span></a>
 <a class="sourceLine" id="cb49-2" data-line-number="2"><span class="co"># plotting the map</span></a>
 <a class="sourceLine" id="cb49-3" data-line-number="3"><span class="co"># -----------------------------------</span></a>
@@ -434,23 +435,34 @@ Beware of the <code>col_types = str_c(c('ccdc',rep('d', 78)),collapse = '')</cod
 </div>
 <div id="horizontal-bar-plots" class="section level2">
 <h2><span class="header-section-number">3.6</span> Horizontal bar plots</h2>
+<p>One downside of the pie map is that we have so many different families that it is kind of hard to tell which color represents each species exactly.</p>
+<p>Another issue is the fact that here we standardized pie sizes, so we cant tell differences in overall abundances - just in composition.</p>
+<p>So a nice complementary plot might be to summariye the family data in a bar plot.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">summary_by_family <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> Acanthuridae<span class="op">:</span>Urotrygonidae,</a>
-<a class="sourceLine" id="cb50-3" data-line-number="3">               <span class="dt">names_to =</span> <span class="st">&#39;Family&#39;</span>, <span class="dt">values_to =</span> <span class="st">&#39;n&#39;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="kw">fct_reorder</span>(Family, n), <span class="dt">x =</span> n, <span class="dt">fill =</span> Family))<span class="op">+</span></a>
-<a class="sourceLine" id="cb50-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_barh</span>(<span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb50-6" data-line-number="6"><span class="st">  </span><span class="kw">facet_grid</span>(habitat_type <span class="op">~</span><span class="st"> </span>Site)<span class="op">+</span></a>
-<a class="sourceLine" id="cb50-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">paletteer_c</span>(<span class="dt">n =</span> <span class="kw">length</span>(fish_columns),</a>
-<a class="sourceLine" id="cb50-8" data-line-number="8">                                         <span class="dt">palette =</span> <span class="st">&quot;ggthemes::Red-Green-Gold Diverging&quot;</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb50-9" data-line-number="9"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&#39;Family&#39;</span>,</a>
-<a class="sourceLine" id="cb50-10" data-line-number="10">                             <span class="dt">title.position =</span> <span class="st">&#39;top&#39;</span>,<span class="dt">nrow =</span> <span class="dv">3</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb50-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb50-12" data-line-number="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb50-13" data-line-number="13">        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
-<a class="sourceLine" id="cb50-14" data-line-number="14">        <span class="dt">legend.key.height =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
-<a class="sourceLine" id="cb50-15" data-line-number="15">        <span class="dt">legend.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&#39;lightgray&#39;</span>, </a>
-<a class="sourceLine" id="cb50-16" data-line-number="16">                                         <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)),</a>
-<a class="sourceLine" id="cb50-17" data-line-number="17">        <span class="dt">legend.position =</span> <span class="st">&#39;bottom&#39;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="co"># transform the family data into &quot;long format&quot;</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> Acanthuridae<span class="op">:</span>Urotrygonidae,</a>
+<a class="sourceLine" id="cb50-4" data-line-number="4">               <span class="dt">names_to =</span> <span class="st">&#39;Family&#39;</span>, <span class="dt">values_to =</span> <span class="st">&#39;n&#39;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5"><span class="st">  </span><span class="co"># initialize ggplot</span></a>
+<a class="sourceLine" id="cb50-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="kw">fct_reorder</span>(Family, n), <span class="dt">x =</span> n, <span class="dt">fill =</span> Family))<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-7" data-line-number="7"><span class="st">  </span><span class="co"># add horizontal bars</span></a>
+<a class="sourceLine" id="cb50-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_barh</span>(<span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-9" data-line-number="9"><span class="st">  </span><span class="co"># facet over haitat type and site (create subplots)</span></a>
+<a class="sourceLine" id="cb50-10" data-line-number="10"><span class="st">  </span><span class="kw">facet_grid</span>(habitat_type <span class="op">~</span><span class="st"> </span>Site)<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-11" data-line-number="11"><span class="st">  </span><span class="co"># use same color coding as in the pie map</span></a>
+<a class="sourceLine" id="cb50-12" data-line-number="12"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">paletteer_c</span>(<span class="dt">n =</span> <span class="kw">length</span>(fish_columns),</a>
+<a class="sourceLine" id="cb50-13" data-line-number="13">                                         <span class="dt">palette =</span> <span class="st">&quot;ggthemes::Red-Green-Gold Diverging&quot;</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-14" data-line-number="14"><span class="st">  </span><span class="co"># format the legend</span></a>
+<a class="sourceLine" id="cb50-15" data-line-number="15"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&#39;Family&#39;</span>,</a>
+<a class="sourceLine" id="cb50-16" data-line-number="16">                             <span class="dt">title.position =</span> <span class="st">&#39;top&#39;</span>,</a>
+<a class="sourceLine" id="cb50-17" data-line-number="17">                             <span class="dt">nrow =</span> <span class="dv">3</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-18" data-line-number="18"><span class="st">  </span><span class="co"># twaek the plot appearance</span></a>
+<a class="sourceLine" id="cb50-19" data-line-number="19"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb50-20" data-line-number="20"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb50-21" data-line-number="21">        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
+<a class="sourceLine" id="cb50-22" data-line-number="22">        <span class="dt">legend.key.height =</span> <span class="kw">unit</span>(<span class="dv">14</span>,<span class="st">&#39;pt&#39;</span>),</a>
+<a class="sourceLine" id="cb50-23" data-line-number="23">        <span class="dt">legend.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&#39;lightgray&#39;</span>, </a>
+<a class="sourceLine" id="cb50-24" data-line-number="24">                                         <span class="dt">color =</span> <span class="kw">rgb</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)),</a>
+<a class="sourceLine" id="cb50-25" data-line-number="25">        <span class="dt">legend.position =</span> <span class="st">&#39;bottom&#39;</span>)</a></code></pre></div>
 <p><img src="piemap_files/figure-html/unnamed-chunk-20-1.png" width="1008" /></p>
 
 <div id="refs" class="references">

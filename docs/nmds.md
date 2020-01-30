@@ -216,29 +216,53 @@ data_nmds <- metaMDS(data_matrix, k = 2, trymax = 999, distance='bray')
 ## Square root transformation
 ## Wisconsin double standardization
 ## Run 0 stress 0.2054951 
-## Run 1 stress 0.2253043 
-## Run 2 stress 0.2089338 
-## Run 3 stress 0.2089028 
-## Run 4 stress 0.2089353 
-## Run 5 stress 0.2089027 
-## Run 6 stress 0.2076919 
-## Run 7 stress 0.2089347 
-## Run 8 stress 0.2125663 
-## Run 9 stress 0.2159829 
-## Run 10 stress 0.2108573 
-## Run 11 stress 0.2061956 
-## Run 12 stress 0.211021 
-## Run 13 stress 0.2269092 
-## Run 14 stress 0.2061966 
-## Run 15 stress 0.2110134 
-## Run 16 stress 0.2061956 
-## Run 17 stress 0.2072502 
-## Run 18 stress 0.2054957 
-## ... Procrustes: rmse 0.0005305925  max resid 0.002908024 
+## Run 1 stress 0.2155049 
+## Run 2 stress 0.2243279 
+## Run 3 stress 0.2061959 
+## Run 4 stress 0.2123936 
+## Run 5 stress 0.215853 
+## Run 6 stress 0.2109351 
+## Run 7 stress 0.2115176 
+## Run 8 stress 0.2076394 
+## Run 9 stress 0.2147939 
+## Run 10 stress 0.2111052 
+## Run 11 stress 0.2061959 
+## Run 12 stress 0.2110076 
+## Run 13 stress 0.2089346 
+## Run 14 stress 0.2084406 
+## Run 15 stress 0.222982 
+## Run 16 stress 0.2056551 
+## ... Procrustes: rmse 0.01077497  max resid 0.06109353 
+## Run 17 stress 0.2133642 
+## Run 18 stress 0.2163068 
+## Run 19 stress 0.2084525 
+## Run 20 stress 0.2233784 
+## Run 21 stress 0.2133876 
+## Run 22 stress 0.2069564 
+## Run 23 stress 0.222829 
+## Run 24 stress 0.206198 
+## Run 25 stress 0.2126525 
+## Run 26 stress 0.2084396 
+## Run 27 stress 0.2124173 
+## Run 28 stress 0.2101243 
+## Run 29 stress 0.2089353 
+## Run 30 stress 0.2177627 
+## Run 31 stress 0.2250296 
+## Run 32 stress 0.2089348 
+## Run 33 stress 0.2069518 
+## Run 34 stress 0.2084399 
+## Run 35 stress 0.2160437 
+## Run 36 stress 0.2084416 
+## Run 37 stress 0.2167596 
+## Run 38 stress 0.2062131 
+## Run 39 stress 0.2061955 
+## Run 40 stress 0.226113 
+## Run 41 stress 0.2056604 
+## ... Procrustes: rmse 0.005968858  max resid 0.02945232 
+## Run 42 stress 0.205493 
+## ... New best solution
+## ... Procrustes: rmse 0.0006579128  max resid 0.002510731 
 ## ... Similar to previous best
-## Run 19 stress 0.2056555 
-## ... Procrustes: rmse 0.01062894  max resid 0.05814338 
-## Run 20 stress 0.2105413 
 ## *** Solution reached
 ```
 
@@ -355,7 +379,7 @@ distances_groups <- transects[match(labels(distances),
                                        transects$Transect_id),]$habitat_type
 ```
 
-One point we unfortunately could not discuss in class (because of time 😞), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.
+One point we unfortunately could not discuss in class (because of time 😢), is the fact that like many other statistical tests, Permanova also has some assumptions about our data.
 
 So, before we start, we need to check if the assumptions for permanova are met by our data [@Anderson01]:
 
@@ -386,7 +410,7 @@ permutest(distances_betadispersion)
 ## 
 ## Response: Distances
 ##           Df Sum Sq  Mean Sq      F N.Perm Pr(>F)  
-## Groups     1 0.1401 0.140096 4.0667    999  0.043 *
+## Groups     1 0.1401 0.140096 4.0667    999   0.06 .
 ## Residuals 44 1.5158 0.034449                       
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1

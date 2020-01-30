@@ -10,7 +10,7 @@ editor_options:
 
 ## External pacakges
 
-Note that we need to drop the following entries unless you know their family:
+Note that we need to drop the following entries unless you know their family (this happens automatically within this script):
 
 - little_grey_guys
 - little_guys_green
@@ -293,7 +293,7 @@ clr_habitat <- c(rgb(0,0,0), rgb(1,1,1)) %>%
   set_names(nm = c('Reef', 'Mangrove'))
 ```
 
-To put the compass on the map we read the svg file into R.
+To put the compass on the map, we read the svg file into R.
 
 
 ```r
@@ -303,6 +303,7 @@ compass <- hypo_read_svg('north.svg')
 
 ## Plotting
 
+Now we have all the pieces needed to plot the pies on the bocas map.
 
 
 ```r
@@ -361,18 +362,33 @@ ggplot()+
 
 ## Horizontal bar plots
 
+One downside of the pie map is that we have so many different families that it is kind of hard to tell which color represents each species exactly.
+
+Another issue is the fact that here we standardized pie sizes, so we cant tell differences in overall abundances - just in composition.
+
+So a nice complementary plot might be to summariye the family data in a bar plot.
+
+
 
 ```r
 summary_by_family %>%
+  # transform the family data into "long format"
   pivot_longer(cols = Acanthuridae:Urotrygonidae,
                names_to = 'Family', values_to = 'n') %>%
+  # initialize ggplot
   ggplot(aes(y = fct_reorder(Family, n), x = n, fill = Family))+
+  # add horizontal bars
   geom_barh(stat = 'identity')+
+  # facet over haitat type and site (create subplots)
   facet_grid(habitat_type ~ Site)+
+  # use same color coding as in the pie map
   scale_fill_manual(values = paletteer_c(n = length(fish_columns),
                                          palette = "ggthemes::Red-Green-Gold Diverging"))+
+  # format the legend
   guides(fill = guide_legend(title = 'Family',
-                             title.position = 'top',nrow = 3))+
+                             title.position = 'top',
+                             nrow = 3))+
+  # twaek the plot appearance
   theme_minimal() +
   theme(axis.title = element_blank(),
         legend.key.size = unit(14,'pt'),
